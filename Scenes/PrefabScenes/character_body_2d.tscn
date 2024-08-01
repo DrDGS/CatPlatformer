@@ -1,14 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://bbex6nahnu52s"]
+[gd_scene load_steps=5 format=3 uid="uid://bbex6nahnu52s"]
 
 [ext_resource type="Script" path="res://Scripts/CharacterBody2D.gd" id="1_glyvn"]
 [ext_resource type="Texture2D" uid="uid://b1wh77g8cvwqw" path="res://Sprites/Character/Cat-Sheet.png" id="2_2adgd"]
+[ext_resource type="Script" path="res://Scripts/HealthComponent.gd" id="3_4h6d8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3gbvd"]
 radius = 4.0
 height = 22.0
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("hpComponent")]
 script = ExtResource("1_glyvn")
+hpComponent = NodePath("HealthComponent")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(2, 2)
@@ -21,3 +23,6 @@ frame = 23
 position = Vector2(0, 24)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_3gbvd")
+
+[node name="HealthComponent" type="Node2D" parent="."]
+script = ExtResource("3_4h6d8")

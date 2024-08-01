@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://ba14gay2160j1"]
 
 [ext_resource type="Texture2D" uid="uid://c0q3hqln10gid" path="res://Sprites/Backgrounds/FantasyCaves/background1.png" id="1_cp3uu"]
-[ext_resource type="Script" path="res://Scenes/Levels/FollowCamera.gd" id="1_qicb4"]
+[ext_resource type="Script" path="res://Scripts/FollowCamera.gd" id="1_qicb4"]
 [ext_resource type="Texture2D" uid="uid://efkgeqdyu5wf" path="res://Sprites/Backgrounds/FantasyCaves/background2.png" id="2_kld7e"]
 [ext_resource type="Texture2D" uid="uid://bfl4psju340eg" path="res://Sprites/Backgrounds/FantasyCaves/background3.png" id="3_xsi27"]
 [ext_resource type="Texture2D" uid="uid://cjmccol8k28bs" path="res://Sprites/Backgrounds/FantasyCaves/background4a.png" id="4_3r8sp"]
