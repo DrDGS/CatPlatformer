@@ -29,6 +29,7 @@ func _physics_process(delta):
 		elif is_on_wall() and Input.is_action_pressed("ui_left"):
 			velocity.y = JUMP_VELOCITY
 			velocity.x = WALL_KNOKBACK
+			
 		elif is_on_wall() and Input.is_action_pressed("ui_right"):
 			velocity.y = JUMP_VELOCITY
 			velocity.x = -WALL_KNOKBACK
@@ -41,8 +42,16 @@ func _physics_process(delta):
 	else:
 		is_wall_climbing = false
 	if is_wall_climbing:
-		velocity.y += (WALL_ClIMBING_VELOCITY * delta)
-		velocity.y = min(velocity.y, WALL_ClIMBING_VELOCITY)
+		var collision = get_slide_collision(0)
+		var body = collision.get_collider()
+		var wall_type = body.get_layer_for_body_rid(collision.get_collider_rid())
+		if wall_type == 0:
+			velocity.y += (WALL_ClIMBING_VELOCITY * delta)
+			velocity.y = min(velocity.y, WALL_ClIMBING_VELOCITY)
+		else:
+			velocity.y = min(velocity.y, 0)
+			
+	
 	
 	move_and_slide()
 
