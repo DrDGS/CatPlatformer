@@ -28,19 +28,19 @@ theme_override_constants/separation = 20
 
 [node name="GameName" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Супер пупер платформер"
+text = "GAME_NAME"
 
 [node name="StartGame" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Начать игру"
+text = "START_GAME"
 
 [node name="Options" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Настройки"
+text = "SETTINGS"
 
 [node name="Exit" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Выход"
+text = "EXIT"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/StartGame" to="." method="_on_start_game_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Options" to="." method="_on_options_pressed"]

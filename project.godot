@@ -35,6 +35,10 @@ TestTakeDamage={
 ]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://Localization/translation.en.translation", "res://Localization/translation.ru.translation")
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
