@@ -42,6 +42,10 @@ TestTakeDamage={
 2d_physics/layer_3="PlayerAttack"
 2d_physics/layer_4="EnemyAttack"
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://Localization/translation.en.translation", "res://Localization/translation.ru.translation")
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
