@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://ba14gay2160j1"]
 
-[ext_resource type="Texture2D" uid="uid://c0q3hqln10gid" path="res://Sprites/Backgrounds/FantasyCaves/background1.png" id="1_cp3uu"]
 [ext_resource type="Script" path="res://Scripts/FollowCamera.gd" id="1_qicb4"]
-[ext_resource type="Texture2D" uid="uid://efkgeqdyu5wf" path="res://Sprites/Backgrounds/FantasyCaves/background2.png" id="2_kld7e"]
-[ext_resource type="Texture2D" uid="uid://bfl4psju340eg" path="res://Sprites/Backgrounds/FantasyCaves/background3.png" id="3_xsi27"]
-[ext_resource type="Texture2D" uid="uid://cjmccol8k28bs" path="res://Sprites/Backgrounds/FantasyCaves/background4a.png" id="4_3r8sp"]
+[ext_resource type="Texture2D" uid="uid://ly3lg24k5scp" path="res://Sprites/Backgrounds/Forest/Forest1.png" id="2_88ngt"]
+[ext_resource type="Texture2D" uid="uid://csnhutiwf2778" path="res://Sprites/Backgrounds/Forest/Forest2.png" id="3_0slbj"]
+[ext_resource type="Texture2D" uid="uid://emeutauvm527" path="res://Sprites/Backgrounds/Forest/Forest3.png" id="4_s1juf"]
 [ext_resource type="TileSet" uid="uid://cjomym1ttwqlk" path="res://TileSets/new_tile_set.tres" id="5_10bsf"]
+[ext_resource type="Texture2D" uid="uid://d2iidd2do4te3" path="res://Sprites/Backgrounds/Forest/Forest4.png" id="5_lfmle"]
 [ext_resource type="PackedScene" uid="uid://bbex6nahnu52s" path="res://Scenes/PrefabScenes/character_body_2d.tscn" id="6_obxvh"]
 
 [node name="TestingScene" type="Node2D"]
@@ -13,6 +13,7 @@
 [node name="FollowCamera" type="Camera2D" parent="." node_paths=PackedStringArray("targetObject")]
 script = ExtResource("1_qicb4")
 targetObject = NodePath("../CharacterBody2D")
+smoothing_enabled = true
 
 [node name="TestingSceneBackground" type="CanvasLayer" parent="."]
 
@@ -21,41 +22,47 @@ scroll_ignore_camera_zoom = true
 
 [node name="Layer1" type="ParallaxLayer" parent="TestingSceneBackground/ParallaxBackground"]
 texture_repeat = 2
-motion_scale = Vector2(0.05, 0.1)
-motion_mirroring = Vector2(960, 0)
+motion_scale = Vector2(0.05, 0)
+motion_mirroring = Vector2(640, 0)
 
 [node name="Background1" type="Sprite2D" parent="TestingSceneBackground/ParallaxBackground/Layer1"]
-position = Vector2(370, 180)
-texture = ExtResource("1_cp3uu")
+position = Vector2(320, 180)
+texture = ExtResource("2_88ngt")
 region_enabled = true
-region_rect = Rect2(0, 0, 960, 480)
+region_rect = Rect2(0, 0, 640, 360)
 
 [node name="Layer2" type="ParallaxLayer" parent="TestingSceneBackground/ParallaxBackground"]
 texture_repeat = 2
-motion_scale = Vector2(0.15, 0.1)
-motion_mirroring = Vector2(960, 0)
+motion_scale = Vector2(0.15, 0)
+motion_mirroring = Vector2(640, 0)
 
 [node name="Background2" type="Sprite2D" parent="TestingSceneBackground/ParallaxBackground/Layer2"]
-position = Vector2(370, 180)
-texture = ExtResource("2_kld7e")
+position = Vector2(320, 180)
+texture = ExtResource("3_0slbj")
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 360)
 
 [node name="Layer3" type="ParallaxLayer" parent="TestingSceneBackground/ParallaxBackground"]
 texture_repeat = 2
-motion_scale = Vector2(0.25, 0.1)
-motion_mirroring = Vector2(960, 0)
+motion_scale = Vector2(0.25, 0)
+motion_mirroring = Vector2(640, 0)
 
 [node name="Background3" type="Sprite2D" parent="TestingSceneBackground/ParallaxBackground/Layer3"]
-position = Vector2(370, 180)
-texture = ExtResource("3_xsi27")
+position = Vector2(320, 180)
+texture = ExtResource("4_s1juf")
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 360)
 
 [node name="Layer4" type="ParallaxLayer" parent="TestingSceneBackground/ParallaxBackground"]
 texture_repeat = 2
-motion_scale = Vector2(0.5, 0.1)
-motion_mirroring = Vector2(960, 0)
+motion_scale = Vector2(0.5, 0)
+motion_mirroring = Vector2(640, 0)
 
 [node name="Background4a" type="Sprite2D" parent="TestingSceneBackground/ParallaxBackground/Layer4"]
-position = Vector2(370, 180)
-texture = ExtResource("4_3r8sp")
+position = Vector2(320, 180)
+texture = ExtResource("5_lfmle")
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 360)
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(13, 0)

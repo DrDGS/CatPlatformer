@@ -35,16 +35,16 @@ TestTakeDamage={
 ]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://Localization/translation.en.translation", "res://Localization/translation.ru.translation")
+
 [layer_names]
 
 2d_physics/layer_1="Player"
 2d_physics/layer_2="Enemy"
 2d_physics/layer_3="PlayerAttack"
 2d_physics/layer_4="EnemyAttack"
-
-[internationalization]
-
-locale/translations=PackedStringArray("res://Localization/translation.en.translation", "res://Localization/translation.ru.translation")
 
 [rendering]
 

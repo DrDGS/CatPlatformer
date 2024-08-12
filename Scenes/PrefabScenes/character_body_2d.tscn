@@ -1,28 +1,112 @@
-[gd_scene load_steps=5 format=3 uid="uid://bbex6nahnu52s"]
+[gd_scene load_steps=13 format=3 uid="uid://bbex6nahnu52s"]
 
 [ext_resource type="Script" path="res://Scripts/CharacterBody2D.gd" id="1_glyvn"]
-[ext_resource type="Texture2D" uid="uid://b1wh77g8cvwqw" path="res://Sprites/Character/Cat-Sheet.png" id="2_2adgd"]
+[ext_resource type="Texture2D" uid="uid://dalh6n4bf7mvc" path="res://Sprites/Character/кот дышит.png" id="2_f13xa"]
 [ext_resource type="Script" path="res://Scripts/HealthComponent.gd" id="3_4h6d8"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3gbvd"]
-radius = 4.0
-height = 22.0
+[sub_resource type="Animation" id="Animation_s5jpj"]
+resource_name = "CatIdle"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_2e05e"]
+resource_name = "CatWalk"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15, 16, 17]
+}
+
+[sub_resource type="Animation" id="Animation_pq4xv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_svf60"]
+_data = {
+"CatIdle": SubResource("Animation_s5jpj"),
+"CatWalk": SubResource("Animation_2e05e"),
+"RESET": SubResource("Animation_pq4xv")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6tjwe"]
+animation = &"CatIdle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hqpht"]
+animation = &"CatWalk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_inxe6"]
+animation = &"CatWalk"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_rxjc4"]
+auto_triangles = false
+blend_point_0/node = SubResource("AnimationNodeAnimation_6tjwe")
+blend_point_0/pos = Vector2(0, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_hqpht")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_inxe6")
+blend_point_2/pos = Vector2(-1, 0)
+triangles = PackedInt32Array(0, 1, 2)
+snap = Vector2(0.01, 0.01)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1y5f3"]
+height = 32.0
 
 [node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("hpComponent")]
 script = ExtResource("1_glyvn")
 hpComponent = NodePath("HealthComponent")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_svf60")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeBlendSpace2D_rxjc4")
+anim_player = NodePath("../AnimationPlayer")
+parameters/blend_position = Vector2(0, 0)
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(2, 2)
-texture = ExtResource("2_2adgd")
-hframes = 8
-vframes = 51
-frame = 23
+position = Vector2(8, -54)
+texture = ExtResource("2_f13xa")
+hframes = 12
+vframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 24)
+position = Vector2(1, 0)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_3gbvd")
+shape = SubResource("CapsuleShape2D_1y5f3")
 
 [node name="HealthComponent" type="Node2D" parent="."]
 script = ExtResource("3_4h6d8")

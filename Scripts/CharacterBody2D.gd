@@ -9,7 +9,8 @@ const WALL_KNOKBACK = 800
 var is_wall_climbing = false
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-@export var hpComponent : Node2D;
+@export var hpComponent : Node2D
+@onready var animTree = $AnimationTree
 
 func _ready():
 	pass
@@ -49,11 +50,17 @@ func _physics_process(delta):
 			velocity.y += (WALL_ClIMBING_VELOCITY * delta)
 			velocity.y = min(velocity.y, WALL_ClIMBING_VELOCITY)
 		else:
-			velocity.y = min(velocity.y, 0)
+			velocity.y = min(velocity.y, 0)	
 			
-	
-	
+	animation_logic(Vector2(direction, 0))
 	move_and_slide()
+
+
+func animation_logic(direction : Vector2):
+	animTree["parameters/blend_position"] = direction.normalized();
+	if direction.x != 0:
+		$Sprite2D.flip_h = direction.x < 0
+
 
 func _process(delta):
 	if (Input.is_action_just_pressed("TestTakeDamage")):
