@@ -3,7 +3,7 @@ extends CanvasLayer
 var langCodes = ["en", "ru"]
 
 func _ready():
-	TranslationServer.set_locale("ru")
+	TranslationServer.set_locale("en")
 
 
 func _on_start_game_pressed():
