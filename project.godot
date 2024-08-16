@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Interface="*res://Scripts/interface.gd"
+Singleton="*res://Scripts/Singleton.gd"
 
 [display]
 
@@ -38,6 +39,7 @@ TestTakeDamage={
 [internationalization]
 
 locale/translations=PackedStringArray("res://Localization/translation.en.translation", "res://Localization/translation.ru.translation")
+locale/language="ru"
 
 [layer_names]
 
