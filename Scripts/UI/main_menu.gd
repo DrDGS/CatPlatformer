@@ -3,12 +3,8 @@ extends CanvasLayer
 
 func _ready():
 	TranslationServer.set_locale(Singleton.locale)
-
-
-func _process(delta):
-	TranslationServer.set_locale(Singleton.locale)
 	updateUI()
-	
+
 
 func _on_start_game_pressed():
 	get_tree().change_scene_to_file("res://Scenes/Levels/testing_scene.tscn")

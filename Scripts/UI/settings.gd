@@ -9,14 +9,14 @@ func _ready():
 	$MarginContainer/VBoxContainer/Language._select_int(select_lang_item) 
 
 
-func _on_back_pressed():
-	get_tree().change_scene_to_file("res://Scenes/UI/main_menu.tscn")	
-
-
 func _on_language_item_selected(index):
 	Singleton.locale = locale_dict[index]
 	TranslationServer.set_locale(Singleton.locale)
 	updateUI()
+	
+	
+func _on_back_pressed():
+	get_tree().change_scene_to_file("res://Scenes/UI/main_menu.tscn")	
 
 
 func updateUI():
