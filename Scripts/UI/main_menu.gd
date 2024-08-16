@@ -15,7 +15,7 @@ func _on_start_game_pressed():
 
 
 func _on_options_pressed():
-	get_tree().change_scene_to_file("res://Scenes/UI/options.tscn")
+	get_tree().change_scene_to_file("res://Scenes/UI/settings.tscn")
 	
 	
 func updateUI():

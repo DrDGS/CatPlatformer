@@ -1,12 +1,12 @@
 extends CanvasLayer
 
 
+var locale_dict = {0: "en", 1: "ru", 2: "es"}
+
+
 func _ready():
-	match Singleton.locale:
-		"en":
-			$MarginContainer/VBoxContainer/Language/selected = 0
-		"ru":
-			$MarginContainer/VBoxContainer/Language/selected = 1
+	var select_lang_item = locale_dict.find_key(Singleton.locale)
+	$MarginContainer/VBoxContainer/Language._select_int(select_lang_item) 
 
 
 func _on_back_pressed():
@@ -14,15 +14,9 @@ func _on_back_pressed():
 
 
 func _on_language_item_selected(index):
-	match index:
-		0:
-			Singleton.locale = "en"
-			TranslationServer.set_locale(Singleton.locale)
-			updateUI()
-		1:
-			Singleton.locale = "ru"
-			TranslationServer.set_locale(Singleton.locale)
-			updateUI()
+	Singleton.locale = locale_dict[index]
+	TranslationServer.set_locale(Singleton.locale)
+	updateUI()
 
 
 func updateUI():
