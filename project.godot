@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Interface="*res://Scripts/interface.gd"
+Singleton="*res://Scripts/Singleton.gd"
 
 [display]
 
@@ -42,7 +43,8 @@ run={
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://Localization/translation.en.translation", "res://Localization/translation.ru.translation")
+locale/translations=PackedStringArray("res://Localization/translation.en.translation", "res://Localization/translation.ru.translation", "res://Localization/translation.es.translation")
+locale/language="ru"
 
 [layer_names]
 
