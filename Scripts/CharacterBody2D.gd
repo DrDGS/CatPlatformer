@@ -30,8 +30,8 @@ func _physics_process(delta):
 		player_run(direction)
 	
 	player_jump(direction)
-	player_climbing(delta)
-		
+#	player_climbing(delta)
+
 	print("State: ", State.keys()[current_state], " direction: ", direction)
 	player_animation()
 	

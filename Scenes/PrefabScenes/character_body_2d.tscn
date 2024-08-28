@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://bbex6nahnu52s"]
+[gd_scene load_steps=15 format=3 uid="uid://bbex6nahnu52s"]
 
 [ext_resource type="Script" path="res://Scripts/CharacterBody2D.gd" id="1_glyvn"]
 [ext_resource type="Texture2D" uid="uid://ddp2nqwdl37yy" path="res://Sprites/Character/Cat_all_anim.png" id="2_bv8yk"]
 [ext_resource type="Script" path="res://Scripts/HealthComponent.gd" id="3_4h6d8"]
+[ext_resource type="Script" path="res://Scripts/Character/PlayerInput.gd" id="4_lpiec"]
 
 [sub_resource type="Animation" id="Animation_s5jpj"]
 resource_name = "CatIdle"
@@ -129,3 +130,6 @@ shape = SubResource("CapsuleShape2D_1y5f3")
 
 [node name="HealthComponent" type="Node2D" parent="."]
 script = ExtResource("3_4h6d8")
+
+[node name="PlayerInput" type="Node2D" parent="."]
+script = ExtResource("4_lpiec")
