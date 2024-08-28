@@ -1,4 +1,10 @@
 extends Node2D
 
-func take_damage():
-	pass
+var Health_point = 9
+
+func take_damage(value = 1):
+	Health_point -= value
+	print("Curent health: ", Health_point)
+	if Health_point == 0:
+		$"../Sprite2D".flip_v = true
+		get_tree().change_scene_to_file("res://Scenes/UI/main_menu.tscn")
