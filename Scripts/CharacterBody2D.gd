@@ -36,19 +36,19 @@ func _physics_process(delta):
 	player_animation()
 	
 
-	#if is_on_wall() and not is_on_floor():
-		#is_wall_climbing = Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_left")
-	#else:
-		#is_wall_climbing = false
-	#if is_wall_climbing:
-		#var collision = get_slide_collision(0)
-		#var body = collision.get_collider()
-		#var wall_type = body.get_layer_for_body_rid(collision.get_collider_rid())
-		#if wall_type == 0:
-			#velocity.y += (WALL_ClIMBING_VELOCITY * delta)
-			#velocity.y = min(velocity.y, WALL_ClIMBING_VELOCITY)
-		#else:
-			#velocity.y = min(velocity.y, 0)
+	if is_on_wall() and not is_on_floor():
+		is_wall_climbing = Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_left")
+	else:
+		is_wall_climbing = false
+	if is_wall_climbing:
+		var collision = get_slide_collision(0)
+		var body = collision.get_collider()
+		var wall_type = body.get_layer_for_body_rid(collision.get_collider_rid())
+		if wall_type == 0:
+			velocity.y += (WALL_ClIMBING_VELOCITY * delta)
+			velocity.y = min(velocity.y, WALL_ClIMBING_VELOCITY)
+		else:
+			velocity.y = min(velocity.y, 0)
 			
 	animation_logic(Vector2(direction, 0))
 	move_and_slide()
@@ -116,7 +116,9 @@ func player_climbing(delta):
 		if (Input.is_action_pressed("move_right") 
 				or Input.is_action_pressed("move_left")) :
 			current_state = State.Climbing
-		
+		else:
+			current_state = State.Idle
+			
 	if current_state == State.Climbing:
 		var collision = get_slide_collision(0)
 		var body = collision.get_collider()
