@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://bbex6nahnu52s"]
 
-[ext_resource type="Script" path="res://Scripts/CharacterBody2D.gd" id="1_glyvn"]
+[ext_resource type="Script" path="res://Scripts/Character/Player.gd" id="1_glyvn"]
 [ext_resource type="Texture2D" uid="uid://ddp2nqwdl37yy" path="res://Sprites/Character/Cat_all_anim.png" id="2_bv8yk"]
 [ext_resource type="Script" path="res://Scripts/HealthComponent.gd" id="3_4h6d8"]
 [ext_resource type="Script" path="res://Scripts/Character/PlayerInput.gd" id="4_lpiec"]
@@ -100,10 +100,11 @@ snap = Vector2(0.01, 0.01)
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1y5f3"]
 height = 32.0
 
-[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("hpComponent")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hpComponent", "plInput")]
 script = ExtResource("1_glyvn")
 ACCELERATION = 15
 hpComponent = NodePath("HealthComponent")
+plInput = NodePath("PlayerInput")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -133,3 +134,5 @@ script = ExtResource("3_4h6d8")
 
 [node name="PlayerInput" type="Node2D" parent="."]
 script = ExtResource("4_lpiec")
+
+[node name="Node2D" type="Node2D" parent="."]
