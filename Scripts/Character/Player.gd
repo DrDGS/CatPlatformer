@@ -34,7 +34,7 @@ extends CharacterBody2D
 @onready var animation_player = $AnimationPlayer
 @onready var animation_tree = $AnimationTree
 
-enum State {Idle, Walk, Run, Jump, Landing}
+enum State {Idle, Walk, Run, Jump, Landing, OnWall}
 var player_state
 
 func _ready():
@@ -69,6 +69,9 @@ func state_machine():
 			
 		State.Jump:
 			player_jump()
+		
+		State.OnWall:
+			player_onWall()
 
 
 func player_idle():
@@ -125,6 +128,31 @@ func player_jump():
 			player_state = State.Walk
 		elif plInput.direction and plInput.is_run:
 			player_state = State.Run
+	
+	if is_on_wall():
+		player_state = State.OnWall
+
+
+func player_onWall():
+	if is_on_wall() and not is_on_floor() and plInput.direction:
+		velocity.x = plInput.direction * SPEED
+		var collision = get_slide_collision(0)
+		var body = collision.get_collider()
+		var wall_type = body.get_layer_for_body_rid(collision.get_collider_rid())
+		if wall_type == 0:
+			velocity.y += (WALL_CLIMBING_VELOCITY)
+			velocity.y = min(velocity.y, WALL_CLIMBING_VELOCITY)
+		else:
+			velocity.y = min(velocity.y, 0)	
+	else:
+		player_state = State.Jump
+	if plInput.is_jump:
+		flip_h(Vector2(-plInput.direction, 0))
+		player_state = State.Jump
+		velocity.y = JUMP_VELOCITY
+		velocity.x = -(abs(plInput.direction) / plInput.direction) * WALL_KNOKBACK * (2 if plInput.is_run else 1)
+	
+		
 
 
 func _process(_delta):
@@ -136,9 +164,12 @@ func _process(_delta):
 
 func animation_logic(direction : Vector2):
 	animation_tree["parameters/blend_position"] = direction.normalized();
-	if direction.x != 0:
-		$Sprite2D.flip_h = direction.x < 0
+	if direction.x != 0 and not plInput.in_air:
+		flip_h(direction)
 
+
+func flip_h(direction : Vector2):
+	$Sprite2D.flip_h = direction.x < 0
 
 func player_animation():
 	match player_state:
@@ -150,6 +181,8 @@ func player_animation():
 			animation_player.play("CatWalk")
 		State.Jump:
 			animation_player.play("CatJump")
+		State.OnWall:
+			animation_player.play("CatOnWall")
 
 
 #if Input.is_action_just_pressed("ui_accept"):
@@ -163,16 +196,4 @@ func player_animation():
 				#velocity.y = JUMP_VELOCITY
 				#velocity.x = WALL_KNOKBACK * (2 if is_run else 1)
 				
-#if is_on_wall() and not is_on_floor():
-		#is_wall_climbing = Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_left")
-	#else:
-		#is_wall_climbing = false
-	#if is_wall_climbing:
-		#var collision = get_slide_collision(0)
-		#var body = collision.get_collider()
-		#var wall_type = body.get_layer_for_body_rid(collision.get_collider_rid())
-		#if wall_type == 0:
-			#velocity.y += (WALL_ClIMBING_VELOCITY * delta)
-			#velocity.y = min(velocity.y, WALL_ClIMBING_VELOCITY)
-		#else:
-			#velocity.y = min(velocity.y, 0)	
+
