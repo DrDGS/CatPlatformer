@@ -46,7 +46,7 @@ func _ready():
 
 func _physics_process(delta):
 	apply_gravity(delta)
-	state_machine(delta)
+	state_machine()
 	print("Player state: ", State.keys()[player_state])
 	move_and_slide()
 
@@ -60,7 +60,7 @@ func get_gravity():
 	return GRAVITY_ASC if velocity.y < 0.0 else GRAVITY_DSC
 
 
-func state_machine(delta):
+func state_machine():
 	match player_state:
 		State.Idle:
 			player_idle()
@@ -72,8 +72,7 @@ func state_machine(delta):
 			player_run()
 			
 		State.Jump:
-			print("JUMP")
-			player_jump(delta)
+			player_jump()
 
 
 func player_idle():
@@ -85,7 +84,7 @@ func player_idle():
 	if plInput.direction and plInput.is_run:
 		player_state = State.Run
 		
-	if plInput.is_jump:
+	if plInput.is_jump and is_on_floor():
 		player_state = State.Jump
 
 
@@ -95,7 +94,7 @@ func player_walk():
 		player_state = State.Idle
 	if plInput.direction and plInput.is_run:
 		player_state = State.Run
-	if plInput.is_jump:
+	if plInput.is_jump and is_on_floor():
 		player_state = State.Jump
 
 
@@ -106,23 +105,32 @@ func player_run():
 		player_state = State.Idle
 	if  not plInput.is_run:
 		player_state = State.Walk
-	if plInput.is_jump:
+	if plInput.is_jump and is_on_floor():
 		player_state = State.Jump
 		
 
-func player_jump(delta):
-	velocity.y = JUMP_VELOCITY
-	
+func player_jump():
+	if plInput.in_air:
+		if is_on_floor():
+			velocity.y = JUMP_VELOCITY
+		player_state = State.Jump
+		
 	print("Vertical velocity: ", velocity.y)
-	
-	if is_on_floor() and not plInput.direction:
-		player_state = State.Idle
-	if is_on_floor() and plInput.direction and not plInput.is_run:
-		player_state = State.Walk
-	if is_on_floor() and plInput.direction and plInput.is_run:
-		player_state = State.Run
-	if plInput.is_jump and not is_on_floor():
-		pass
+
+	if plInput.in_air:
+		# jump without collisions
+		if velocity.y >= GRAVITY_DSC * TIME_ASCEND * 0.1:
+			plInput.in_air = false
+		#if get_last_slide_collision():
+			#plInput.in_air = false
+
+	if not plInput.in_air and is_on_floor():
+		if not plInput.direction:
+			player_state = State.Idle
+		elif plInput.direction and not plInput.is_run:
+			player_state = State.Walk
+		elif plInput.direction and plInput.is_run:
+			player_state = State.Run
 
 
 func jump_animation_finished():

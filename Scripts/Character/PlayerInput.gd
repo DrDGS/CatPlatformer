@@ -3,6 +3,7 @@ extends Node2D
 var direction
 var is_run
 var is_jump
+var in_air
 
 # Input handler 
 # List of actions
@@ -20,5 +21,6 @@ func _physics_process(delta):
 
 	if Input.is_action_just_pressed("jump"):
 		is_jump = true
+		in_air = true
 	else:
 		is_jump = false
