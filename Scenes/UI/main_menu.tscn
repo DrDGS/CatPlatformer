@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://ejhpdcvwm1in"]
+
+[ext_resource type="Texture2D" uid="uid://c0q3hqln10gid" path="res://Sprites/Backgrounds/FantasyCaves/background1.png" id="1_27xu8"]
+[ext_resource type="Script" path="res://Scripts/UI/main_menu.gd" id="1_m8x5f"]
+
+[node name="MainMenu" type="CanvasLayer"]
+script = ExtResource("1_m8x5f")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(330, 181)
+scale = Vector2(0.76, 0.8)
+texture = ExtResource("1_27xu8")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 30.0
+offset_top = -88.0
+offset_right = 236.0
+offset_bottom = 88.0
+grow_vertical = 2
+metadata/_edit_group_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="GameName" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "GAME_NAME"
+
+[node name="StartGame" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "START_GAME"
+
+[node name="Settings" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "SETTINGS"
+
+[node name="Exit" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "EXIT"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/StartGame" to="." method="_on_start_game_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Settings" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

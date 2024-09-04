@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cco2ym71lm7kq"]
+
+[node name="EnemyAttackArea" type="Area2D"]
+collision_layer = 8
+
+[node name="AttackCollision" type="CollisionPolygon2D" parent="."]
+build_mode = 1
+polygon = PackedVector2Array(-5, 5, 5, 5, 5, -5, -5, -5)

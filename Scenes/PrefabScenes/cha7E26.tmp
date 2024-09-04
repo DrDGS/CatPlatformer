@@ -1,9 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://bbex6nahnu52s"]
+[gd_scene load_steps=14 format=3 uid="uid://bbex6nahnu52s"]
 
-[ext_resource type="Script" path="res://Scripts/Character/Player.gd" id="1_glyvn"]
+[ext_resource type="Script" path="res://Scripts/CharacterBody2D.gd" id="1_glyvn"]
 [ext_resource type="Texture2D" uid="uid://ddp2nqwdl37yy" path="res://Sprites/Character/Cat_all_anim.png" id="2_bv8yk"]
 [ext_resource type="Script" path="res://Scripts/HealthComponent.gd" id="3_4h6d8"]
-[ext_resource type="Script" path="res://Scripts/Character/PlayerInput.gd" id="4_lpiec"]
 
 [sub_resource type="Animation" id="Animation_s5jpj"]
 resource_name = "CatIdle"
@@ -100,11 +99,10 @@ snap = Vector2(0.01, 0.01)
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1y5f3"]
 height = 32.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hpComponent", "plInput")]
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("hpComponent")]
 script = ExtResource("1_glyvn")
 ACCELERATION = 15
 hpComponent = NodePath("HealthComponent")
-plInput = NodePath("PlayerInput")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -113,7 +111,6 @@ libraries = {
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 active = false
-deterministic = false
 tree_root = SubResource("AnimationNodeBlendSpace2D_rxjc4")
 anim_player = NodePath("../AnimationPlayer")
 parameters/blend_position = Vector2(0.196645, -0.0132159)
@@ -131,8 +128,3 @@ shape = SubResource("CapsuleShape2D_1y5f3")
 
 [node name="HealthComponent" type="Node2D" parent="."]
 script = ExtResource("3_4h6d8")
-
-[node name="PlayerInput" type="Node2D" parent="."]
-script = ExtResource("4_lpiec")
-
-[node name="Node2D" type="Node2D" parent="."]
