@@ -23,13 +23,11 @@ extends CharacterBody2D
 @export var TIME_DESCEND = 0.5
 
 @onready var JUMP_VELOCITY = (2 * JUMP_HEIGHT) / (TIME_ASCEND)
-@onready var GRAVITY_ASC = (-2 * JUMP_HEIGHT) / (TIME_ASCEND * TIME_ASCEND)
-@onready var GRAVITY_DSC = (-2 * JUMP_HEIGHT) / (TIME_DESCEND * TIME_DESCEND)
-
+@onready var GRAVITY_ASC = -(2 * JUMP_HEIGHT) / (TIME_ASCEND * TIME_ASCEND)
+@onready var GRAVITY_DSC = -(2 * JUMP_HEIGHT) / (TIME_DESCEND * TIME_DESCEND)
 
 @export var WALL_CLIMBING_VELOCITY = 25
 @export var WALL_KNOKBACK = 200
-
 
 @export var hpComponent : Node2D
 @export var plInput : Node2D
@@ -38,7 +36,6 @@ extends CharacterBody2D
 
 enum State {Idle, Walk, Run, Jump, Landing}
 var player_state
-
 
 func _ready():
 	player_state = State.Idle
@@ -53,7 +50,6 @@ func _physics_process(delta):
 
 func apply_gravity(delta):
 	velocity.y += get_gravity() * delta
-	print("Gravity: ", get_gravity())
 	
 
 func get_gravity():
@@ -90,6 +86,7 @@ func player_idle():
 
 func player_walk():
 	velocity.x = move_toward(velocity.x, plInput.direction * SPEED, ACCELERATION)
+	
 	if not plInput.direction:
 		player_state = State.Idle
 	if plInput.direction and plInput.is_run:
@@ -101,6 +98,7 @@ func player_walk():
 func player_run():
 	velocity.x = move_toward(velocity.x, plInput.direction * SPEED * VEL_RUN_COEF,
 			 ACCELERATION)
+	
 	if not plInput.direction:
 		player_state = State.Idle
 	if  not plInput.is_run:
@@ -114,15 +112,11 @@ func player_jump():
 		if is_on_floor():
 			velocity.y = JUMP_VELOCITY
 		player_state = State.Jump
-		
-	print("Vertical velocity: ", velocity.y)
 
 	if plInput.in_air:
 		# jump without collisions
 		if velocity.y >= GRAVITY_DSC * TIME_ASCEND * 0.1:
 			plInput.in_air = false
-		#if get_last_slide_collision():
-			#plInput.in_air = false
 
 	if not plInput.in_air and is_on_floor():
 		if not plInput.direction:
@@ -131,10 +125,6 @@ func player_jump():
 			player_state = State.Walk
 		elif plInput.direction and plInput.is_run:
 			player_state = State.Run
-
-
-func jump_animation_finished():
-	player_state = State.Idle
 
 
 func _process(_delta):
@@ -161,3 +151,28 @@ func player_animation():
 		State.Jump:
 			animation_player.play("CatJump")
 
+
+#if Input.is_action_just_pressed("ui_accept"):
+		#if is_on_floor():
+			#velocity.y = JUMP_VELOCITY
+		#elif is_on_wall():
+			#if Input.is_action_pressed("ui_right"):
+				#velocity.y = JUMP_VELOCITY
+				#velocity.x = -WALL_KNOKBACK * (2 if is_run else 1)
+			#elif Input.is_action_pressed("ui_left"):
+				#velocity.y = JUMP_VELOCITY
+				#velocity.x = WALL_KNOKBACK * (2 if is_run else 1)
+				
+#if is_on_wall() and not is_on_floor():
+		#is_wall_climbing = Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_left")
+	#else:
+		#is_wall_climbing = false
+	#if is_wall_climbing:
+		#var collision = get_slide_collision(0)
+		#var body = collision.get_collider()
+		#var wall_type = body.get_layer_for_body_rid(collision.get_collider_rid())
+		#if wall_type == 0:
+			#velocity.y += (WALL_ClIMBING_VELOCITY * delta)
+			#velocity.y = min(velocity.y, WALL_ClIMBING_VELOCITY)
+		#else:
+			#velocity.y = min(velocity.y, 0)	
