@@ -1,12 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://ba14gay2160j1"]
+[gd_scene load_steps=16 format=3 uid="uid://ba14gay2160j1"]
 
 [ext_resource type="Script" path="res://Scripts/FollowCamera.gd" id="1_qicb4"]
-[ext_resource type="Texture2D" uid="uid://ly3lg24k5scp" path="res://Sprites/Backgrounds/Forest/Forest1.png" id="2_88ngt"]
-[ext_resource type="Texture2D" uid="uid://csnhutiwf2778" path="res://Sprites/Backgrounds/Forest/Forest2.png" id="3_0slbj"]
-[ext_resource type="Texture2D" uid="uid://emeutauvm527" path="res://Sprites/Backgrounds/Forest/Forest3.png" id="4_s1juf"]
+[ext_resource type="Texture2D" uid="uid://bo4358ur6fhf0" path="res://Sprites/Backgrounds/Forest/Layer1.png" id="2_m8hik"]
+[ext_resource type="Texture2D" uid="uid://bdf0j2o70mf40" path="res://Sprites/Backgrounds/Forest/Layer2.png" id="3_0pf5o"]
+[ext_resource type="Texture2D" uid="uid://dp37exagnrdlc" path="res://Sprites/Backgrounds/Forest/Layer3.png" id="4_5gdhd"]
+[ext_resource type="Texture2D" uid="uid://dvebu8nbsics4" path="res://Sprites/Backgrounds/Forest/Layer4.png" id="5_6tfyl"]
 [ext_resource type="TileSet" uid="uid://cjomym1ttwqlk" path="res://TileSets/new_tile_set.tres" id="5_10bsf"]
-[ext_resource type="Texture2D" uid="uid://d2iidd2do4te3" path="res://Sprites/Backgrounds/Forest/Forest4.png" id="5_lfmle"]
 [ext_resource type="PackedScene" uid="uid://bbex6nahnu52s" path="res://Scenes/PrefabScenes/character_body_2d.tscn" id="6_obxvh"]
+[ext_resource type="Texture2D" uid="uid://degplkqtvnvn2" path="res://Sprites/Backgrounds/Forest/Layer5.png" id="6_wyjrh"]
+[ext_resource type="Texture2D" uid="uid://c11j5aepp4r85" path="res://Sprites/Backgrounds/Forest/Layer6.png" id="7_ldrq3"]
+[ext_resource type="Texture2D" uid="uid://c4y7rq0sdgwp4" path="res://Sprites/Backgrounds/Forest/Layer7.png" id="8_fd6ic"]
+[ext_resource type="Texture2D" uid="uid://fejr15eugnnn" path="res://Sprites/Backgrounds/Forest/Layer8.png" id="9_3l4j5"]
+[ext_resource type="Texture2D" uid="uid://cddwitufmy8pk" path="res://Sprites/Backgrounds/Forest/Layer9.png" id="10_kycs2"]
+[ext_resource type="Texture2D" uid="uid://deatfdlc7tvob" path="res://Sprites/Backgrounds/Forest/Layer10.png" id="11_3lq7n"]
+[ext_resource type="Texture2D" uid="uid://bmkj66h0vxudv" path="res://Sprites/Backgrounds/Forest/Layer11.png" id="12_67gne"]
+[ext_resource type="Texture2D" uid="uid://c7papnq6evnx5" path="res://Sprites/Backgrounds/Forest/Layer12.png" id="13_7jt8w"]
 
 [node name="TestingScene" type="Node2D"]
 
@@ -27,40 +35,128 @@ motion_mirroring = Vector2(640, 0)
 
 [node name="Background1" type="Sprite2D" parent="TestingSceneBackground/ParallaxBackground/Layer1"]
 position = Vector2(320, 180)
-texture = ExtResource("2_88ngt")
+texture = ExtResource("2_m8hik")
 region_enabled = true
 region_rect = Rect2(0, 0, 640, 360)
 
 [node name="Layer2" type="ParallaxLayer" parent="TestingSceneBackground/ParallaxBackground"]
 texture_repeat = 2
-motion_scale = Vector2(0.15, 0)
+motion_scale = Vector2(0.1, 0)
 motion_mirroring = Vector2(640, 0)
 
 [node name="Background2" type="Sprite2D" parent="TestingSceneBackground/ParallaxBackground/Layer2"]
 position = Vector2(320, 180)
-texture = ExtResource("3_0slbj")
+texture = ExtResource("3_0pf5o")
 region_enabled = true
 region_rect = Rect2(0, 0, 640, 360)
 
 [node name="Layer3" type="ParallaxLayer" parent="TestingSceneBackground/ParallaxBackground"]
 texture_repeat = 2
-motion_scale = Vector2(0.25, 0)
+motion_scale = Vector2(0.1, 0)
 motion_mirroring = Vector2(640, 0)
 
 [node name="Background3" type="Sprite2D" parent="TestingSceneBackground/ParallaxBackground/Layer3"]
 position = Vector2(320, 180)
-texture = ExtResource("4_s1juf")
+texture = ExtResource("4_5gdhd")
 region_enabled = true
 region_rect = Rect2(0, 0, 640, 360)
 
 [node name="Layer4" type="ParallaxLayer" parent="TestingSceneBackground/ParallaxBackground"]
 texture_repeat = 2
-motion_scale = Vector2(0.5, 0)
+motion_scale = Vector2(0.1, 0)
 motion_mirroring = Vector2(640, 0)
 
-[node name="Background4a" type="Sprite2D" parent="TestingSceneBackground/ParallaxBackground/Layer4"]
+[node name="Background4" type="Sprite2D" parent="TestingSceneBackground/ParallaxBackground/Layer4"]
 position = Vector2(320, 180)
-texture = ExtResource("5_lfmle")
+texture = ExtResource("5_6tfyl")
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 360)
+
+[node name="Layer5" type="ParallaxLayer" parent="TestingSceneBackground/ParallaxBackground"]
+texture_repeat = 2
+motion_scale = Vector2(0.1, 0)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Background5" type="Sprite2D" parent="TestingSceneBackground/ParallaxBackground/Layer5"]
+position = Vector2(320, 180)
+texture = ExtResource("6_wyjrh")
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 360)
+
+[node name="Layer6" type="ParallaxLayer" parent="TestingSceneBackground/ParallaxBackground"]
+texture_repeat = 2
+motion_scale = Vector2(0.1, 0)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Background6" type="Sprite2D" parent="TestingSceneBackground/ParallaxBackground/Layer6"]
+position = Vector2(320, 180)
+texture = ExtResource("7_ldrq3")
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 360)
+
+[node name="Layer7" type="ParallaxLayer" parent="TestingSceneBackground/ParallaxBackground"]
+texture_repeat = 2
+motion_scale = Vector2(0.1, 0)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Background7" type="Sprite2D" parent="TestingSceneBackground/ParallaxBackground/Layer7"]
+position = Vector2(320, 180)
+texture = ExtResource("8_fd6ic")
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 360)
+
+[node name="Layer8" type="ParallaxLayer" parent="TestingSceneBackground/ParallaxBackground"]
+texture_repeat = 2
+motion_scale = Vector2(0.1, 0)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Background8" type="Sprite2D" parent="TestingSceneBackground/ParallaxBackground/Layer8"]
+position = Vector2(320, 180)
+texture = ExtResource("9_3l4j5")
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 360)
+
+[node name="Layer9" type="ParallaxLayer" parent="TestingSceneBackground/ParallaxBackground"]
+texture_repeat = 2
+motion_scale = Vector2(0.1, 0)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Background9" type="Sprite2D" parent="TestingSceneBackground/ParallaxBackground/Layer9"]
+position = Vector2(320, 180)
+texture = ExtResource("10_kycs2")
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 360)
+
+[node name="Layer10" type="ParallaxLayer" parent="TestingSceneBackground/ParallaxBackground"]
+texture_repeat = 2
+motion_scale = Vector2(0.1, 0)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Background10" type="Sprite2D" parent="TestingSceneBackground/ParallaxBackground/Layer10"]
+position = Vector2(320, 180)
+texture = ExtResource("11_3lq7n")
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 360)
+
+[node name="Layer11" type="ParallaxLayer" parent="TestingSceneBackground/ParallaxBackground"]
+texture_repeat = 2
+motion_scale = Vector2(0.1, 0)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Background11" type="Sprite2D" parent="TestingSceneBackground/ParallaxBackground/Layer11"]
+position = Vector2(320, 180)
+texture = ExtResource("12_67gne")
+region_enabled = true
+region_rect = Rect2(0, 0, 640, 360)
+
+[node name="Layer12" type="ParallaxLayer" parent="TestingSceneBackground/ParallaxBackground"]
+texture_repeat = 2
+motion_scale = Vector2(0.1, 0)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Background12" type="Sprite2D" parent="TestingSceneBackground/ParallaxBackground/Layer12"]
+position = Vector2(320, 180)
+texture = ExtResource("13_7jt8w")
 region_enabled = true
 region_rect = Rect2(0, 0, 640, 360)
 

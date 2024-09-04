@@ -19,6 +19,7 @@ func updateUI():
 	$MarginContainer/VBoxContainer/StartGame.text = tr("START_GAME")
 	$MarginContainer/VBoxContainer/Settings.text = tr("SETTINGS")
 	$MarginContainer/VBoxContainer/Exit.text = tr("EXIT")
+	
 
 func _on_exit_pressed():
 	get_tree().quit()
