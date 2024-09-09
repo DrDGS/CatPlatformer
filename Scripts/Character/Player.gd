@@ -19,6 +19,7 @@ extends CharacterBody2D
 # GRAVITY_DSC - gravity while descending
 
 @export var JUMP_HEIGHT = -80
+@export var JUMP_HEIGHT_FACTOR_FROM_X = 0.1
 @export var TIME_ASCEND = 0.4
 @export var TIME_DESCEND = 0.5
 
@@ -28,23 +29,27 @@ extends CharacterBody2D
 
 @export var WALL_CLIMBING_VELOCITY = 25
 @export var WALL_KNOKBACK = 200
+@export var TIME_TO_IDLE = 0.85
 
 @export var hpComponent : Node2D
 @export var plInput : Node2D
 @onready var animation_player = $AnimationPlayer
 @onready var animation_tree = $AnimationTree
+@onready var idle_timer = $IdleTimer
 
 enum State {Idle, Walk, Run, Jump, Landing, OnWall}
 var player_state
+var was_running
 
 func _ready():
 	player_state = State.Idle
+	idle_timer.timeout.connect(_on_idle_timer_timeout)
 
 
 func _physics_process(delta):
 	apply_gravity(delta)
 	state_machine()
-	print("Player state: ", State.keys()[player_state])
+	#print("Player state: ", State.keys()[player_state])
 	move_and_slide()
 
 
@@ -99,12 +104,15 @@ func player_walk():
 
 
 func player_run():
+	was_running = true
 	velocity.x = move_toward(velocity.x, plInput.direction * SPEED * VEL_RUN_COEF,
 			 ACCELERATION)
 	
 	if not plInput.direction:
+		was_running = false
 		player_state = State.Idle
 	if  not plInput.is_run:
+		was_running = false
 		player_state = State.Walk
 	if plInput.is_jump and is_on_floor():
 		player_state = State.Jump
@@ -113,7 +121,7 @@ func player_run():
 func player_jump():
 	if plInput.in_air:
 		if is_on_floor():
-			velocity.y = JUMP_VELOCITY
+			velocity.y = JUMP_VELOCITY - (abs(velocity.x) * JUMP_HEIGHT_FACTOR_FROM_X)
 		player_state = State.Jump
 
 	if plInput.in_air:
@@ -129,7 +137,9 @@ func player_jump():
 		elif plInput.direction and plInput.is_run:
 			player_state = State.Run
 	
-	if is_on_wall():
+	if is_on_wall() and plInput.direction:
+		idle_timer.wait_time = TIME_TO_IDLE
+		idle_timer.start()
 		player_state = State.OnWall
 
 
@@ -147,12 +157,15 @@ func player_onWall():
 	else:
 		player_state = State.Jump
 	if plInput.is_jump:
+		idle_timer.stop()
 		flip_h(Vector2(-plInput.direction, 0))
 		player_state = State.Jump
 		velocity.y = JUMP_VELOCITY
-		velocity.x = -(abs(plInput.direction) / plInput.direction) * WALL_KNOKBACK * (2 if plInput.is_run else 1)
+		velocity.x = -(abs(plInput.direction) / plInput.direction) * WALL_KNOKBACK * (2 if was_running else 1)
 	
-		
+func _on_idle_timer_timeout():
+	was_running = false
+	idle_timer.stop()
 
 
 func _process(_delta):
@@ -183,17 +196,3 @@ func player_animation():
 			animation_player.play("CatJump")
 		State.OnWall:
 			animation_player.play("CatOnWall")
-
-
-#if Input.is_action_just_pressed("ui_accept"):
-		#if is_on_floor():
-			#velocity.y = JUMP_VELOCITY
-		#elif is_on_wall():
-			#if Input.is_action_pressed("ui_right"):
-				#velocity.y = JUMP_VELOCITY
-				#velocity.x = -WALL_KNOKBACK * (2 if is_run else 1)
-			#elif Input.is_action_pressed("ui_left"):
-				#velocity.y = JUMP_VELOCITY
-				#velocity.x = WALL_KNOKBACK * (2 if is_run else 1)
-				
-

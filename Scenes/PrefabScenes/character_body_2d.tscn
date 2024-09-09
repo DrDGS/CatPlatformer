@@ -37,6 +37,22 @@ tracks/0/keys = {
 "values": [24, 25, 26, 27, 28, 29, 30, 31, 32, 33]
 }
 
+[sub_resource type="Animation" id="Animation_sddgb"]
+resource_name = "CatOnWall"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [48, 49, 50, 51, 72, 73]
+}
+
 [sub_resource type="Animation" id="Animation_2e05e"]
 resource_name = "CatWalk"
 length = 0.6
@@ -67,22 +83,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_sddgb"]
-resource_name = "CatOnWall"
-loop_mode = 2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.6, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [48, 49, 50, 51, 72, 73]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_svf60"]
@@ -154,3 +154,5 @@ script = ExtResource("3_4h6d8")
 script = ExtResource("4_lpiec")
 
 [node name="Node2D" type="Node2D" parent="."]
+
+[node name="IdleTimer" type="Timer" parent="."]
