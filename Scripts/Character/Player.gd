@@ -29,7 +29,7 @@ extends CharacterBody2D
 
 @export var WALL_CLIMBING_VELOCITY = 25
 @export var WALL_KNOKBACK = 200
-@export var TIME_TO_IDLE = 0.85
+@export var TIME_TO_IDLE = 1.1
 
 @export var hpComponent : Node2D
 @export var plInput : Node2D
@@ -37,7 +37,7 @@ extends CharacterBody2D
 @onready var animation_tree = $AnimationTree
 @onready var idle_timer = $IdleTimer
 
-enum State {Idle, Walk, Run, Jump, Landing, OnWall}
+enum State {Idle, Walk, Run, Jump, Landing, OnWall, OnWallIdle}
 var player_state
 var was_running
 
@@ -77,9 +77,12 @@ func state_machine():
 		
 		State.OnWall:
 			player_onWall()
+		State.OnWallIdle:
+			player_onWall()
 
 
 func player_idle():
+	was_running = false
 	velocity.x = move_toward(velocity.x, 0, AC_STOP_COEF * ACCELERATION)
 	
 	if plInput.direction:
@@ -93,6 +96,7 @@ func player_idle():
 
 
 func player_walk():
+	was_running = false
 	velocity.x = move_toward(velocity.x, plInput.direction * SPEED, ACCELERATION)
 	
 	if not plInput.direction:
@@ -109,10 +113,8 @@ func player_run():
 			 ACCELERATION)
 	
 	if not plInput.direction:
-		was_running = false
 		player_state = State.Idle
 	if  not plInput.is_run:
-		was_running = false
 		player_state = State.Walk
 	if plInput.is_jump and is_on_floor():
 		player_state = State.Jump
@@ -159,11 +161,13 @@ func player_onWall():
 	if plInput.is_jump:
 		idle_timer.stop()
 		flip_h(Vector2(-plInput.direction, 0))
-		player_state = State.Jump
 		velocity.y = JUMP_VELOCITY
 		velocity.x = -(abs(plInput.direction) / plInput.direction) * WALL_KNOKBACK * (2 if was_running else 1)
-	
+		player_state = State.Jump
+
+
 func _on_idle_timer_timeout():
+	player_state = State.OnWallIdle
 	was_running = false
 	idle_timer.stop()
 
@@ -196,3 +200,5 @@ func player_animation():
 			animation_player.play("CatJump")
 		State.OnWall:
 			animation_player.play("CatOnWall")
+		State.OnWallIdle:
+			animation_player.play("CatOnWallIdle")
