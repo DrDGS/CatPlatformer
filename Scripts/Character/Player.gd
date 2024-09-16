@@ -19,6 +19,7 @@ extends CharacterBody2D
 # GRAVITY_DSC - gravity while descending
 
 @export var JUMP_HEIGHT = -80
+@export var JUMP_HEIGHT_FACTOR_FROM_X = 0.1
 @export var TIME_ASCEND = 0.4
 @export var TIME_DESCEND = 0.5
 
@@ -28,23 +29,27 @@ extends CharacterBody2D
 
 @export var WALL_CLIMBING_VELOCITY = 25
 @export var WALL_KNOKBACK = 200
+@export var TIME_TO_IDLE = 1.1
 
 @export var hpComponent : Node2D
 @export var plInput : Node2D
 @onready var animation_player = $AnimationPlayer
 @onready var animation_tree = $AnimationTree
+@onready var idle_timer = $IdleTimer
 
-enum State {Idle, Walk, Run, Jump, Landing}
+enum State {Idle, Walk, Run, Jump, Landing, OnWall, OnWallIdle}
 var player_state
+var was_running
 
 func _ready():
 	player_state = State.Idle
+	idle_timer.timeout.connect(_on_idle_timer_timeout)
 
 
 func _physics_process(delta):
 	apply_gravity(delta)
 	state_machine()
-	print("Player state: ", State.keys()[player_state])
+	#print("Player state: ", State.keys()[player_state])
 	move_and_slide()
 
 
@@ -69,9 +74,15 @@ func state_machine():
 			
 		State.Jump:
 			player_jump()
+		
+		State.OnWall:
+			player_onWall()
+		State.OnWallIdle:
+			player_onWall()
 
 
 func player_idle():
+	was_running = false
 	velocity.x = move_toward(velocity.x, 0, AC_STOP_COEF * ACCELERATION)
 	
 	if plInput.direction:
@@ -85,6 +96,7 @@ func player_idle():
 
 
 func player_walk():
+	was_running = false
 	velocity.x = move_toward(velocity.x, plInput.direction * SPEED, ACCELERATION)
 	
 	if not plInput.direction:
@@ -96,6 +108,7 @@ func player_walk():
 
 
 func player_run():
+	was_running = true
 	velocity.x = move_toward(velocity.x, plInput.direction * SPEED * VEL_RUN_COEF,
 			 ACCELERATION)
 	
@@ -110,7 +123,7 @@ func player_run():
 func player_jump():
 	if plInput.in_air:
 		if is_on_floor():
-			velocity.y = JUMP_VELOCITY
+			velocity.y = JUMP_VELOCITY - (abs(velocity.x) * JUMP_HEIGHT_FACTOR_FROM_X)
 		player_state = State.Jump
 
 	if plInput.in_air:
@@ -125,6 +138,38 @@ func player_jump():
 			player_state = State.Walk
 		elif plInput.direction and plInput.is_run:
 			player_state = State.Run
+	
+	if is_on_wall() and plInput.direction:
+		idle_timer.wait_time = TIME_TO_IDLE
+		idle_timer.start()
+		player_state = State.OnWall
+
+
+func player_onWall():
+	if is_on_wall() and not is_on_floor() and plInput.direction:
+		velocity.x = plInput.direction * SPEED
+		var collision = get_slide_collision(0)
+		var body = collision.get_collider()
+		var wall_type = body.get_layer_for_body_rid(collision.get_collider_rid())
+		if wall_type == 0:
+			velocity.y += (WALL_CLIMBING_VELOCITY)
+			velocity.y = min(velocity.y, WALL_CLIMBING_VELOCITY)
+		else:
+			velocity.y = min(velocity.y, 0)	
+	else:
+		player_state = State.Jump
+	if plInput.is_jump:
+		idle_timer.stop()
+		flip_h(Vector2(-plInput.direction, 0))
+		velocity.y = JUMP_VELOCITY
+		velocity.x = -(abs(plInput.direction) / plInput.direction) * WALL_KNOKBACK * (2 if was_running else 1)
+		player_state = State.Jump
+
+
+func _on_idle_timer_timeout():
+	player_state = State.OnWallIdle
+	was_running = false
+	idle_timer.stop()
 
 
 func _process(_delta):
@@ -136,9 +181,12 @@ func _process(_delta):
 
 func animation_logic(direction : Vector2):
 	animation_tree["parameters/blend_position"] = direction.normalized();
-	if direction.x != 0:
-		$Sprite2D.flip_h = direction.x < 0
+	if direction.x != 0 and not plInput.in_air:
+		flip_h(direction)
 
+
+func flip_h(direction : Vector2):
+	$Sprite2D.flip_h = direction.x < 0
 
 func player_animation():
 	match player_state:
@@ -150,29 +198,7 @@ func player_animation():
 			animation_player.play("CatWalk")
 		State.Jump:
 			animation_player.play("CatJump")
-
-
-#if Input.is_action_just_pressed("ui_accept"):
-		#if is_on_floor():
-			#velocity.y = JUMP_VELOCITY
-		#elif is_on_wall():
-			#if Input.is_action_pressed("ui_right"):
-				#velocity.y = JUMP_VELOCITY
-				#velocity.x = -WALL_KNOKBACK * (2 if is_run else 1)
-			#elif Input.is_action_pressed("ui_left"):
-				#velocity.y = JUMP_VELOCITY
-				#velocity.x = WALL_KNOKBACK * (2 if is_run else 1)
-				
-#if is_on_wall() and not is_on_floor():
-		#is_wall_climbing = Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_left")
-	#else:
-		#is_wall_climbing = false
-	#if is_wall_climbing:
-		#var collision = get_slide_collision(0)
-		#var body = collision.get_collider()
-		#var wall_type = body.get_layer_for_body_rid(collision.get_collider_rid())
-		#if wall_type == 0:
-			#velocity.y += (WALL_ClIMBING_VELOCITY * delta)
-			#velocity.y = min(velocity.y, WALL_ClIMBING_VELOCITY)
-		#else:
-			#velocity.y = min(velocity.y, 0)	
+		State.OnWall:
+			animation_player.play("CatOnWall")
+		State.OnWallIdle:
+			animation_player.play("CatOnWallIdle")
