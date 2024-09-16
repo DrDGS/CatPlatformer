@@ -4,6 +4,7 @@ var direction
 var is_run
 var is_jump
 var in_air
+var in_air_all
 
 # Input handler 
 # List of actions
@@ -19,8 +20,9 @@ func _physics_process(delta):
 	else:
 		is_run = false
 
-	if Input.is_action_just_pressed("jump"):
+	if Input.is_action_just_pressed("jump") and not in_air_all:
 		is_jump = true
 		in_air = true
+		in_air_all = true
 	else:
 		is_jump = false
