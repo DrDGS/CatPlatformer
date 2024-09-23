@@ -162,6 +162,8 @@ func player_run():
 		
 
 func player_jump():
+	if not is_on_wall():
+		plInput.can_climb_wall = true
 	if plInput.in_air:
 		if is_on_floor():
 			velocity.y = JUMP_VELOCITY - (abs(velocity.x) * JUMP_HEIGHT_FACTOR_FROM_X)
@@ -181,7 +183,7 @@ func player_jump():
 		elif plInput.direction and plInput.is_run:
 			player_state = State.Run
 	
-	if is_on_wall() and plInput.direction:
+	if is_on_wall() and plInput.direction and plInput.can_climb_wall:
 		plInput.in_air_all = false
 		idle_timer.wait_time = TIME_TO_IDLE
 		idle_timer.start()
@@ -189,9 +191,8 @@ func player_jump():
 
 
 func player_onWall():
-	if is_on_wall() and not is_on_floor() and plInput.direction and (velocity.x == 0 or abs(get_wall_normal().x) / get_wall_normal().x == abs(velocity.x) / velocity.x):
-		print(get_wall_normal().x)
-		print(plInput.direction)
+	if is_on_wall() and not is_on_floor() and plInput.direction:
+		plInput.can_climb_wall = false
 		velocity.x = plInput.direction * SPEED
 		var collision = get_slide_collision(0)
 		var body = collision.get_collider()
@@ -207,7 +208,7 @@ func player_onWall():
 		idle_timer.stop()
 		flip_h(Vector2(-plInput.direction, 0))
 		velocity.y = JUMP_VELOCITY
-		velocity.x = -(abs(plInput.direction) / plInput.direction) * WALL_KNOKBACK * (2 if was_running else 1) * speed_coef
+		velocity.x = (get_wall_normal().x) * WALL_KNOKBACK * (2 if was_running else 1) * speed_coef
 		player_state = State.Jump
 
 

@@ -5,6 +5,7 @@ var is_run
 var is_jump
 var in_air
 var in_air_all
+var can_climb_wall
 
 # Input handler 
 # List of actions
