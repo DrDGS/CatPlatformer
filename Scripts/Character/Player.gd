@@ -6,7 +6,7 @@ extends CharacterBody2D
 # AC_STOP_COEF - multiplies ACCELERATION to get delta for dropping speed
 
 @export var SPEED = 100.0
-@export var VEL_RUN_COEF = 3
+@export var VEL_RUN_COEF = 1.5
 @export var ACCELERATION = 30
 @export var AC_STOP_COEF = 1.25
 
