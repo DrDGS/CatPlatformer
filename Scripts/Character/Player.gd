@@ -175,7 +175,6 @@ func player_jump():
 			plInput.in_air = false
 
 	if not plInput.in_air and is_on_floor():
-		plInput.in_air_all = false
 		if not plInput.direction:
 			player_state = State.Idle
 		elif plInput.direction and not plInput.is_run:
@@ -184,7 +183,6 @@ func player_jump():
 			player_state = State.Run
 	
 	if is_on_wall() and plInput.direction and plInput.can_climb_wall:
-		plInput.in_air_all = false
 		idle_timer.wait_time = TIME_TO_IDLE
 		idle_timer.start()
 		player_state = State.OnWall
@@ -237,7 +235,7 @@ func _process(_delta):
 
 func animation_logic(direction : Vector2):
 	animation_tree["parameters/blend_position"] = direction.normalized();
-	if direction.x != 0 and not plInput.in_air_all:
+	if direction.x != 0 and (player_state == State.Walk or player_state == State.Idle or player_state == State.Run):
 		flip_h(direction)
 
 
