@@ -10,6 +10,14 @@ extends CharacterBody2D
 @export var ACCELERATION = 30
 @export var AC_STOP_COEF = 1.25
 
+@export var DRY_SPEED_COEF = 1
+@export var WET_SPEED_COEF = 0.5
+@export var ELEC_SPEED_COEF = 1.5
+
+@export var DRY_JUMP_COEF = 1
+@export var WET_JUMP_COEF = 0.5
+@export var ELEC_JUMP_COEF = 1.5
+
 # Relating to JUMP Mechanic
 # JUMP_HEIGHT - height of peak
 # TIME_ASCEND - reaching peak time
@@ -19,9 +27,13 @@ extends CharacterBody2D
 # GRAVITY_DSC - gravity while descending
 
 @export var JUMP_HEIGHT = -80
+@export var JUMP_HEIGHT_BASE = -80
 @export var JUMP_HEIGHT_FACTOR_FROM_X = 0.1
 @export var TIME_ASCEND = 0.4
 @export var TIME_DESCEND = 0.5
+@export var TIME_ASCEND_BASE = 0.4
+@export var TIME_DESCEND_BASE = 0.5
+@export var ANIMATION_GROUND_TIME = 0.8
 
 @onready var JUMP_VELOCITY = (2 * JUMP_HEIGHT) / (TIME_ASCEND)
 @onready var GRAVITY_ASC = -(2 * JUMP_HEIGHT) / (TIME_ASCEND * TIME_ASCEND)
@@ -29,21 +41,29 @@ extends CharacterBody2D
 
 @export var WALL_CLIMBING_VELOCITY = 25
 @export var WALL_KNOKBACK = 200
-@export var TIME_TO_IDLE = 1.1
+@export var TIME_TO_IDLE = 1.05
 
 @export var hpComponent : Node2D
 @export var plInput : Node2D
 @onready var animation_player = $AnimationPlayer
 @onready var animation_tree = $AnimationTree
 @onready var idle_timer = $IdleTimer
+@onready var jump_timer = $JumpTimer
 
 enum State {Idle, Walk, Run, Jump, Landing, OnWall, OnWallIdle}
+enum BodyState {Wet, Dry, Elec}
 var player_state
+var player_body_state
 var was_running
+var speed_coef
+var jump_coef
+var animation_ground
 
 func _ready():
 	player_state = State.Idle
+	player_body_state = BodyState.Dry
 	idle_timer.timeout.connect(_on_idle_timer_timeout)
+	jump_timer.timeout.connect(_on_jump_timer_timeout)
 
 
 func _physics_process(delta):
@@ -60,8 +80,29 @@ func apply_gravity(delta):
 func get_gravity():
 	return GRAVITY_ASC if velocity.y < 0.0 else GRAVITY_DSC
 
+func calculate_gravity():
+	JUMP_HEIGHT = JUMP_HEIGHT_BASE * jump_coef
+	TIME_ASCEND = TIME_ASCEND_BASE * jump_coef
+	TIME_DESCEND = TIME_DESCEND_BASE * jump_coef
+	JUMP_VELOCITY = (2 * JUMP_HEIGHT) / (TIME_ASCEND)
+	GRAVITY_ASC = -(2 * JUMP_HEIGHT) / (TIME_ASCEND * TIME_ASCEND)
+	GRAVITY_DSC = -(2 * JUMP_HEIGHT) / (TIME_DESCEND * TIME_DESCEND)
+
 
 func state_machine():
+	match player_body_state:
+		BodyState.Dry:
+			speed_coef = DRY_SPEED_COEF
+			jump_coef = DRY_JUMP_COEF
+			calculate_gravity()
+		BodyState.Wet:
+			speed_coef = WET_SPEED_COEF
+			jump_coef = WET_JUMP_COEF
+			calculate_gravity()
+		BodyState.Elec:
+			speed_coef = ELEC_SPEED_COEF
+			jump_coef = ELEC_JUMP_COEF
+			calculate_gravity()
 	match player_state:
 		State.Idle:
 			player_idle()
@@ -97,7 +138,7 @@ func player_idle():
 
 func player_walk():
 	was_running = false
-	velocity.x = move_toward(velocity.x, plInput.direction * SPEED, ACCELERATION)
+	velocity.x = move_toward(velocity.x, plInput.direction * SPEED * speed_coef, ACCELERATION)
 	
 	if not plInput.direction:
 		player_state = State.Idle
@@ -109,7 +150,7 @@ func player_walk():
 
 func player_run():
 	was_running = true
-	velocity.x = move_toward(velocity.x, plInput.direction * SPEED * VEL_RUN_COEF,
+	velocity.x = move_toward(velocity.x, plInput.direction * SPEED * VEL_RUN_COEF * speed_coef,
 			 ACCELERATION)
 	
 	if not plInput.direction:
@@ -121,6 +162,8 @@ func player_run():
 		
 
 func player_jump():
+	if not is_on_wall():
+		plInput.can_climb_wall = true
 	if plInput.in_air:
 		if is_on_floor():
 			velocity.y = JUMP_VELOCITY - (abs(velocity.x) * JUMP_HEIGHT_FACTOR_FROM_X)
@@ -132,6 +175,7 @@ func player_jump():
 			plInput.in_air = false
 
 	if not plInput.in_air and is_on_floor():
+		plInput.in_air_all = false
 		if not plInput.direction:
 			player_state = State.Idle
 		elif plInput.direction and not plInput.is_run:
@@ -139,7 +183,8 @@ func player_jump():
 		elif plInput.direction and plInput.is_run:
 			player_state = State.Run
 	
-	if is_on_wall() and plInput.direction:
+	if is_on_wall() and plInput.direction and plInput.can_climb_wall:
+		plInput.in_air_all = false
 		idle_timer.wait_time = TIME_TO_IDLE
 		idle_timer.start()
 		player_state = State.OnWall
@@ -147,6 +192,7 @@ func player_jump():
 
 func player_onWall():
 	if is_on_wall() and not is_on_floor() and plInput.direction:
+		plInput.can_climb_wall = false
 		velocity.x = plInput.direction * SPEED
 		var collision = get_slide_collision(0)
 		var body = collision.get_collider()
@@ -162,7 +208,7 @@ func player_onWall():
 		idle_timer.stop()
 		flip_h(Vector2(-plInput.direction, 0))
 		velocity.y = JUMP_VELOCITY
-		velocity.x = -(abs(plInput.direction) / plInput.direction) * WALL_KNOKBACK * (2 if was_running else 1)
+		velocity.x = (get_wall_normal().x) * WALL_KNOKBACK * (2 if was_running else 1) * speed_coef
 		player_state = State.Jump
 
 
@@ -171,17 +217,27 @@ func _on_idle_timer_timeout():
 	was_running = false
 	idle_timer.stop()
 
+func _on_jump_timer_timeout():
+	animation_ground = true
+	jump_timer.stop()
+
 
 func _process(_delta):
 	animation_logic(Vector2(plInput.direction, 0))
 	player_animation()
 	if (Input.is_action_just_pressed("TestTakeDamage")):
 		hpComponent.take_damage(1);
+	if (Input.is_action_just_pressed("TestDryState")):
+		player_body_state = BodyState.Dry
+	if (Input.is_action_just_pressed("TestWetState")):
+		player_body_state = BodyState.Wet
+	if (Input.is_action_just_pressed("TestElecState")):
+		player_body_state = BodyState.Elec
 
 
 func animation_logic(direction : Vector2):
 	animation_tree["parameters/blend_position"] = direction.normalized();
-	if direction.x != 0 and not plInput.in_air:
+	if direction.x != 0 and not plInput.in_air_all:
 		flip_h(direction)
 
 
@@ -197,7 +253,18 @@ func player_animation():
 		State.Run:
 			animation_player.play("CatWalk")
 		State.Jump:
-			animation_player.play("CatJump")
+			if plInput.in_air:
+				if animation_player.current_animation != "CatJumpUpFinish":
+					jump_timer.wait_time = TIME_ASCEND + TIME_DESCEND - ANIMATION_GROUND_TIME
+					jump_timer.start()
+					animation_ground = false
+					animation_player.play("CatJumpUp")
+				animation_player.queue("CatJumpUpFinish")
+			else:
+				if animation_ground:
+					animation_player.play("CatJumpDownFinish")
+				else:
+					animation_player.play("CatJumpDown")
 		State.OnWall:
 			animation_player.play("CatOnWall")
 		State.OnWallIdle:
