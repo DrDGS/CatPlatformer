@@ -235,7 +235,7 @@ func _process(_delta):
 
 func animation_logic(direction : Vector2):
 	animation_tree["parameters/blend_position"] = direction.normalized();
-	if direction.x != 0 and (player_state == State.Walk or player_state == State.Idle or player_state == State.Run):
+	if direction.x != 0 and (player_state == State.Walk or player_state == State.Idle or player_state == State.Run or player_state == State.OnWall):
 		flip_h(direction)
 
 
