@@ -7,7 +7,7 @@ func _ready():
 
 
 func _on_start_game_pressed():
-	get_tree().change_scene_to_file("res://Scenes/Levels/testing_scene.tscn")
+	get_tree().change_scene_to_file("res://Scenes/Levels/tutorial_level.tscn")
 
 
 func _on_options_pressed():

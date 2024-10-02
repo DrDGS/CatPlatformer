@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3wlm582uaxbx"]
+
+[ext_resource type="Script" path="res://Scripts/FollowCamera.gd" id="1_t1ma5"]
+
+[node name="FollowCamera" type="Camera2D" node_paths=PackedStringArray("targetObject")]
+script = ExtResource("1_t1ma5")
+targetObject = NodePath("")
+smoothing_enabled = true
