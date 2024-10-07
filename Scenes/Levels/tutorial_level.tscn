@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dri0ejyt7i2pu"]
+[gd_scene load_steps=18 format=3 uid="uid://dri0ejyt7i2pu"]
 
 [ext_resource type="Script" path="res://Scripts/FollowCamera.gd" id="1_4k3b6"]
 [ext_resource type="PackedScene" uid="uid://bbex6nahnu52s" path="res://Scenes/PrefabScenes/character_body_2d.tscn" id="1_j1s5y"]
@@ -15,6 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://bmkj66h0vxudv" path="res://Sprites/Backgrounds/Forest/Layer11.png" id="12_igpyo"]
 [ext_resource type="Texture2D" uid="uid://c7papnq6evnx5" path="res://Sprites/Backgrounds/Forest/Layer12.png" id="13_7n3od"]
 [ext_resource type="TileSet" uid="uid://cjomym1ttwqlk" path="res://TileSets/new_tile_set.tres" id="14_scdg5"]
+[ext_resource type="PackedScene" uid="uid://cp2euhca5i0v0" path="res://Scenes/PrefabScenes/triger.tscn" id="16_fk5sj"]
+[ext_resource type="Script" path="res://Scenes/PrefabScenes/triger.gd" id="17_ihyi0"]
 
 [node name="TestingScene" type="Node2D"]
 
@@ -177,3 +179,8 @@ layer_3/tile_data = PackedInt32Array(-65537, 4, 3, -131072, 65540, 3, -131071, 1
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_j1s5y")]
 position = Vector2(-11, -47)
+
+[node name="Triger" parent="." instance=ExtResource("16_fk5sj")]
+script = ExtResource("17_ihyi0")
+
+[connection signal="body_entered" from="Triger" to="Triger" method="_on_body_entered"]

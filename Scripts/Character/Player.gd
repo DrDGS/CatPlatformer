@@ -5,7 +5,7 @@ extends CharacterBody2D
 # ACCELERATION - delta for reaching speed
 # AC_STOP_COEF - multiplies ACCELERATION to get delta for dropping speed
 
-@export var SPEED = 100.0
+@export var SPEED = 96.0
 @export var VEL_RUN_COEF = 1.5
 @export var ACCELERATION = 30
 @export var AC_STOP_COEF = 1.25
@@ -26,8 +26,8 @@ extends CharacterBody2D
 # GRAVITY_ASC - gravity while ascending (~980 - approx project var)
 # GRAVITY_DSC - gravity while descending
 
-@export var JUMP_HEIGHT = -80
-@export var JUMP_HEIGHT_BASE = -80
+@export var JUMP_HEIGHT = -84
+@export var JUMP_HEIGHT_BASE = -84
 @export var JUMP_HEIGHT_FACTOR_FROM_X = 0.1
 @export var TIME_ASCEND = 0.4
 @export var TIME_DESCEND = 0.5
@@ -45,6 +45,7 @@ extends CharacterBody2D
 
 @export var hpComponent : Node2D
 @export var plInput : Node2D
+@export var saveComponent : Node2D
 @onready var animation_player = $AnimationPlayer
 @onready var animation_tree = $AnimationTree
 @onready var idle_timer = $IdleTimer
@@ -223,6 +224,10 @@ func _on_jump_timer_timeout():
 func _process(_delta):
 	animation_logic(Vector2(plInput.direction, 0))
 	player_animation()
+	if (Input.is_action_just_pressed("TestAddSavePoint")):
+		saveComponent.savePoint()
+	if (Input.is_action_just_pressed("TestLoadFromSavePoint")):
+		saveComponent.loadPoint()
 	if (Input.is_action_just_pressed("TestTakeDamage")):
 		hpComponent.take_damage(1);
 	if (Input.is_action_just_pressed("TestDryState")):
@@ -267,3 +272,5 @@ func player_animation():
 			animation_player.play("CatOnWall")
 		State.OnWallIdle:
 			animation_player.play("CatOnWallIdle")
+
+
