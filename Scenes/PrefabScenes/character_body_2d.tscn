@@ -1,9 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://bbex6nahnu52s"]
+[gd_scene load_steps=22 format=3 uid="uid://bbex6nahnu52s"]
 
 [ext_resource type="Script" path="res://Scripts/Character/Player.gd" id="1_glyvn"]
 [ext_resource type="Texture2D" uid="uid://b865m6ru0txj2" path="res://Sprites/Character/Cat_animated.png" id="2_naua7"]
 [ext_resource type="Script" path="res://Scripts/HealthComponent.gd" id="3_4h6d8"]
 [ext_resource type="Script" path="res://Scripts/Character/PlayerInput.gd" id="4_lpiec"]
+[ext_resource type="Script" path="res://Scenes/PrefabScenes/SaveComponent.gd" id="5_j5rcb"]
 
 [sub_resource type="Animation" id="Animation_s5jpj"]
 resource_name = "CatIdle"
@@ -204,12 +205,13 @@ snap = Vector2(0.01, 0.01)
 radius = 9.0
 height = 32.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hpComponent", "plInput")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hpComponent", "plInput", "saveComponent")]
 script = ExtResource("1_glyvn")
 ACCELERATION = 15
 WALL_KNOKBACK = 107
 hpComponent = NodePath("HealthComponent")
 plInput = NodePath("PlayerInput")
+saveComponent = NodePath("SaveComponent")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -245,3 +247,6 @@ script = ExtResource("4_lpiec")
 [node name="IdleTimer" type="Timer" parent="."]
 
 [node name="JumpTimer" type="Timer" parent="."]
+
+[node name="SaveComponent" type="Node2D" parent="."]
+script = ExtResource("5_j5rcb")
