@@ -10,10 +10,17 @@ func _ready():
 func _process(delta):
 	pass
 
-func triger():
-	print(1)
-
 
 func _on_body_entered(body):
 	if body.name == "CharacterBody2D":
-		body.hpComponent.take_damage()
+		if self.name == "DeathTriger":
+			DeathTriger(body)
+		if self.name == "PoolTriger":
+			PoolTriger(body)
+		
+
+func DeathTriger(body):
+	body.hpComponent.take_damage()
+
+func PoolTriger(body):
+	body.player_body_state = 0

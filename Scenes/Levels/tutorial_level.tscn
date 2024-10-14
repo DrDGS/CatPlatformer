@@ -180,7 +180,13 @@ layer_3/tile_data = PackedInt32Array(-65537, 4, 3, -131072, 65540, 3, -131071, 1
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_j1s5y")]
 position = Vector2(-11, -47)
 
-[node name="Triger" parent="." instance=ExtResource("16_fk5sj")]
+[node name="DeathTriger" parent="." instance=ExtResource("16_fk5sj")]
 script = ExtResource("17_ihyi0")
 
-[connection signal="body_entered" from="Triger" to="Triger" method="_on_body_entered"]
+[node name="PoolTriger" parent="." instance=ExtResource("16_fk5sj")]
+position = Vector2(-347, -14)
+scale = Vector2(0.5, 0.1)
+script = ExtResource("17_ihyi0")
+
+[connection signal="body_entered" from="DeathTriger" to="DeathTriger" method="_on_body_entered"]
+[connection signal="body_entered" from="PoolTriger" to="PoolTriger" method="_on_body_entered"]

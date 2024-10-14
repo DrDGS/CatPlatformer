@@ -8,6 +8,7 @@ extends Camera2D
 @export_range(1, 100) var smoothing_distance : int = 8
 @export var ignored_distance : float = 30
 
+
 var camera_position : Vector2
 var target_position : Vector2
 
