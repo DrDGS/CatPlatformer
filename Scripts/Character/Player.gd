@@ -34,6 +34,7 @@ extends CharacterBody2D
 @export var TIME_ASCEND_BASE = 0.4
 @export var TIME_DESCEND_BASE = 0.5
 @export var ANIMATION_GROUND_TIME = 0.8
+@export var HEIGHT_TO_DEATH = 300
 
 @onready var JUMP_VELOCITY = (2 * JUMP_HEIGHT) / (TIME_ASCEND)
 @onready var GRAVITY_ASC = -(2 * JUMP_HEIGHT) / (TIME_ASCEND * TIME_ASCEND)
@@ -76,6 +77,8 @@ func _physics_process(delta):
 
 func apply_gravity(delta):
 	velocity.y += get_gravity() * delta
+	if self.get_position().y > HEIGHT_TO_DEATH:
+		hpComponent.take_damage()
 	
 
 func get_gravity():
