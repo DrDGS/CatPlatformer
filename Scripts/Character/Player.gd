@@ -126,6 +126,7 @@ func state_machine():
 		
 		State.OnWall:
 			player_onWall()
+			
 		State.OnWallIdle:
 			player_onWall()
 		State.ChangeBodyState:

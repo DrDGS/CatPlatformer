@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cmg0oyhd27qot"]
+
+[ext_resource type="Texture2D" uid="uid://c8a0gv2ttto6" path="res://icon.svg" id="1_iathc"]
+[ext_resource type="Script" path="res://Scripts/Levels/SpriteTransfer.gd" id="2_3qodr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3our"]
+size = Vector2(128, 320)
+
+[node name="Log" type="Area2D"]
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_k3our")
+
+[node name="Texture" type="Sprite2D" parent="."]
+scale = Vector2(1, 2.5)
+texture = ExtResource("1_iathc")
+
+[node name="SpriteTransfer" type="Node2D" parent="."]
+script = ExtResource("2_3qodr")
+
+[connection signal="body_exited" from="." to="SpriteTransfer" method="_on_log_body_exited"]
