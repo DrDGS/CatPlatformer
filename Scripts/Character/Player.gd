@@ -43,6 +43,8 @@ extends CharacterBody2D
 @export var WALL_CLIMBING_VELOCITY = 25
 @export var WALL_KNOKBACK = 200
 @export var TIME_TO_IDLE = 1.05
+@export var TIME_TO_DRY = 3
+@export var TIME_TO_ELEC = 3
 
 @export var hpComponent : Node2D
 @export var plInput : Node2D
@@ -51,8 +53,9 @@ extends CharacterBody2D
 @onready var animation_tree = $AnimationTree
 @onready var idle_timer = $IdleTimer
 @onready var jump_timer = $JumpTimer
+@onready var body_state_timer = $ChangeBodyStateTimer
 
-enum State {Idle, Walk, Run, Jump, Landing, OnWall, OnWallIdle}
+enum State {Idle, Walk, Run, Jump, Landing, OnWall, OnWallIdle, ChangeBodyState}
 enum BodyState {Wet, Dry, Elec}
 var player_state
 var player_body_state
@@ -66,6 +69,7 @@ func _ready():
 	player_body_state = BodyState.Dry
 	idle_timer.timeout.connect(_on_idle_timer_timeout)
 	jump_timer.timeout.connect(_on_jump_timer_timeout)
+	body_state_timer.timeout.connect(_on_change_body_state_timer_timeout)
 
 
 func _physics_process(delta):
@@ -124,6 +128,8 @@ func state_machine():
 			player_onWall()
 		State.OnWallIdle:
 			player_onWall()
+		State.ChangeBodyState:
+			player_changeBodyState()
 
 
 func player_idle():
@@ -138,6 +144,19 @@ func player_idle():
 		
 	if plInput.is_jump and is_on_floor():
 		player_state = State.Jump
+	
+	if velocity.x == 0 and is_on_floor() and plInput.change_body_state and (player_body_state == BodyState.Wet or player_body_state == BodyState.Dry):
+		player_state = State.ChangeBodyState
+
+
+func player_changeBodyState():
+	if plInput.change_body_state:
+		if body_state_timer.is_stopped():
+			body_state_timer.wait_time = TIME_TO_DRY if player_body_state == BodyState.Wet else TIME_TO_ELEC
+			body_state_timer.start()
+	else:
+		body_state_timer.stop()
+		player_state = State.Idle
 
 
 func player_walk():
@@ -149,6 +168,9 @@ func player_walk():
 	if plInput.direction and plInput.is_run:
 		player_state = State.Run
 	if plInput.is_jump and is_on_floor():
+		player_state = State.Jump
+	if not is_on_floor():
+		animation_ground = false
 		player_state = State.Jump
 
 
@@ -162,6 +184,9 @@ func player_run():
 	if  not plInput.is_run:
 		player_state = State.Walk
 	if plInput.is_jump and is_on_floor():
+		player_state = State.Jump
+	if not is_on_floor():
+		animation_ground = false
 		player_state = State.Jump
 		
 
@@ -223,6 +248,12 @@ func _on_jump_timer_timeout():
 	animation_ground = true
 	jump_timer.stop()
 
+func _on_change_body_state_timer_timeout():
+	if player_body_state == BodyState.Dry or player_body_state == BodyState.Wet:
+		player_body_state += 1
+	body_state_timer.stop()
+	player_state = State.Idle
+
 
 func _process(_delta):
 	animation_logic(Vector2(plInput.direction, 0))
@@ -251,6 +282,7 @@ func flip_h(direction : Vector2):
 	$Sprite2D.flip_h = direction.x < 0
 
 func player_animation():
+	$Sprite2D.flip_v = false
 	match player_state:
 		State.Idle:
 			animation_player.play("CatIdle")
@@ -275,5 +307,8 @@ func player_animation():
 			animation_player.play("CatOnWall")
 		State.OnWallIdle:
 			animation_player.play("CatOnWallIdle")
+		State.ChangeBodyState:
+			$Sprite2D.flip_v = true
+			
 
 
