@@ -248,5 +248,7 @@ script = ExtResource("4_lpiec")
 
 [node name="JumpTimer" type="Timer" parent="."]
 
+[node name="ChangeBodyStateTimer" type="Timer" parent="."]
+
 [node name="SaveComponent" type="Node2D" parent="."]
 script = ExtResource("5_j5rcb")

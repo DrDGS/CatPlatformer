@@ -182,7 +182,7 @@ layer_3/tile_data = PackedInt32Array(-3145738, 1376258, 268435475, -3080202, 137
 z_as_relative = false
 position = Vector2(1160, -640)
 
-[node name="Triger" parent="." instance=ExtResource("16_fk5sj")]
+[node name="DeathTriger" parent="." instance=ExtResource("16_fk5sj")]
 script = ExtResource("17_ihyi0")
 
 [node name="Log" parent="." instance=ExtResource("18_k81cg")]
@@ -190,3 +190,10 @@ z_index = 1
 position = Vector2(944, -496)
 
 [connection signal="body_entered" from="Triger" to="Triger" method="_on_body_entered"]
+[node name="PoolTriger" parent="." instance=ExtResource("16_fk5sj")]
+position = Vector2(-347, -14)
+scale = Vector2(0.5, 0.1)
+script = ExtResource("17_ihyi0")
+
+[connection signal="body_entered" from="DeathTriger" to="DeathTriger" method="_on_body_entered"]
+[connection signal="body_entered" from="PoolTriger" to="PoolTriger" method="_on_body_entered"]
