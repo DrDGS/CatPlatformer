@@ -252,3 +252,9 @@ script = ExtResource("4_lpiec")
 
 [node name="SaveComponent" type="Node2D" parent="."]
 script = ExtResource("5_j5rcb")
+
+[node name="CoyotTimer" type="Timer" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(0, 10)
+target_position = Vector2(0, 80)
