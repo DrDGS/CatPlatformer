@@ -305,7 +305,7 @@ func player_animation():
 		State.Walk:
 			animation_player.play("CatWalk")
 		State.Run:
-			animation_player.play("CatWalk")
+			animation_player.play("CatRun")
 		State.Jump:
 			if plInput.in_air:
 				if animation_player.current_animation != "CatJumpUpFinish":

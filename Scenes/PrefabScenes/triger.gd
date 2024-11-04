@@ -17,6 +17,8 @@ func _on_body_entered(body):
 			DeathTriger(body)
 		if self.name == "PoolTriger":
 			PoolTriger(body)
+		if self.name == "WinTriger":
+			WinTriger(body)
 		
 
 func DeathTriger(body):
@@ -24,3 +26,7 @@ func DeathTriger(body):
 
 func PoolTriger(body):
 	body.player_body_state = 0
+
+func WinTriger(body):
+	get_tree().change_scene_to_file("res://Scenes/UI/main_menu.tscn")	
+	

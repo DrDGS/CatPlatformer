@@ -6,5 +6,5 @@ size = Vector2(62, 55)
 [node name="Triger" type="Area2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(350, -50)
+position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_g8ya5")
