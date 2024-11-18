@@ -204,7 +204,8 @@ func player_onWall():
 			velocity.y += (WALL_CLIMBING_VELOCITY)
 			velocity.y = min(velocity.y, WALL_CLIMBING_VELOCITY)
 		else:
-			velocity.y = min(velocity.y, 0)	
+			velocity.y = min(velocity.y, 0)
+		print(wall_type)
 	else:
 		player_state = State.Jump
 	if plInput.is_jump:

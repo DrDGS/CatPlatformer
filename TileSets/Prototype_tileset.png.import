@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccmmfc4uf10at"
-path="res://.godot/imported/props1.png-ea9ad57df5705985c018e6da52fe4df1.ctex"
+uid="uid://ci772md373lg7"
+path="res://.godot/imported/Prototype_tileset.png-71060aaeed15d3b0288e8bb0de0fd256.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/TileSets/FantasyCaves/props1.png"
-dest_files=["res://.godot/imported/props1.png-ea9ad57df5705985c018e6da52fe4df1.ctex"]
+source_file="res://TileSets/Prototype_tileset.png"
+dest_files=["res://.godot/imported/Prototype_tileset.png-71060aaeed15d3b0288e8bb0de0fd256.ctex"]
 
 [params]
 

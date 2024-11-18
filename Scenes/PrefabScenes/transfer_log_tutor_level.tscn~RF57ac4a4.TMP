@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmg0oyhd27qot"]
+
+[ext_resource type="Texture2D" uid="uid://c8a0gv2ttto6" path="res://icon.svg" id="1_iathc"]
+[ext_resource type="Script" path="res://Scripts/Levels/SpriteTransfer.gd" id="2_3qodr"]
+
+[node name="Log" type="Area2D"]
+script = ExtResource("2_3qodr")
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(72, 160, 72, -104, -72, -192, -72, 160)
+
+[node name="TextureFace" type="Sprite2D" parent="."]
+z_index = 1
+scale = Vector2(1, 2.5)
+texture = ExtResource("1_iathc")
+
+[node name="TextureBack" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(1.61559e-27, -3.08149e-33)
+rotation = 3.14159
+scale = Vector2(1, 2.49954)
+texture = ExtResource("1_iathc")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

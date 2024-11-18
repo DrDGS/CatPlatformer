@@ -7,6 +7,5 @@ func setMaxHp():
 
 func take_damage(value = 1):
 	Health_point -= value
-	print("Curent health: ", Health_point)
 	if Health_point == 0:
 		get_parent().saveComponent.loadPoint()

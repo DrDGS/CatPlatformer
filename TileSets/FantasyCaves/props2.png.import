@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dijpubxoml5cg"
-path="res://.godot/imported/wood.png-9f91dd99b83a796e6426433fc1e5a584.ctex"
+uid="uid://djmqwno112m8l"
+path="res://.godot/imported/props2.png-afba45c75fc79116953938a531524b87.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://TileSets/wood.png"
-dest_files=["res://.godot/imported/wood.png-9f91dd99b83a796e6426433fc1e5a584.ctex"]
+source_file="res://TileSets/FantasyCaves/props2.png"
+dest_files=["res://.godot/imported/props2.png-afba45c75fc79116953938a531524b87.ctex"]
 
 [params]
 
