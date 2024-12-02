@@ -15144,7 +15144,7 @@ position = Vector2(864, -16)
 position = Vector2(936, 40)
 
 [node name="DeathTriger6" parent="DeathTriger2" instance=ExtResource("16_fk5sj")]
-position = Vector2(1008, 0)
+position = Vector2(1008, 2)
 
 [node name="PoolTriger" parent="." instance=ExtResource("16_fk5sj")]
 position = Vector2(-347, -14)
