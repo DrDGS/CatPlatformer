@@ -15116,7 +15116,7 @@ layer_3/tile_data = PackedInt32Array(131056, 0, 2, 131057, 65536, 2, 131058, 131
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_j1s5y")]
 z_index = 1
 z_as_relative = false
-position = Vector2(1196, -649)
+position = Vector2(25, -14)
 
 [node name="Log" parent="." instance=ExtResource("18_k81cg")]
 z_index = 1
