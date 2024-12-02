@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://clv7do8sn7rpe"
-path="res://.godot/imported/mainlev_build.png-0fdede0ae8d7f66a3e2ad6cb59df2672.ctex"
+path="res://.godot/imported/mainlev_build.png-b06e23ee9eb0541d6495f872a8b79600.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/TileSets/FantasyCaves/mainlev_build.png"
-dest_files=["res://.godot/imported/mainlev_build.png-0fdede0ae8d7f66a3e2ad6cb59df2672.ctex"]
+source_file="res://TileSets/FantasyCaves/mainlev_build.png"
+dest_files=["res://.godot/imported/mainlev_build.png-b06e23ee9eb0541d6495f872a8b79600.ctex"]
 
 [params]
 

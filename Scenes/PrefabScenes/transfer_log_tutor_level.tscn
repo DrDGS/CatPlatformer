@@ -1,29 +1,27 @@
-[gd_scene load_steps=3 format=3 uid="uid://g3crwttf47wm"]
+[gd_scene load_steps=4 format=3 uid="uid://cmg0oyhd27qot"]
 
 [ext_resource type="Script" path="res://Scripts/Levels/SpriteTransfer.gd" id="2_3qodr"]
-[ext_resource type="Texture2D" uid="uid://rn3u83rroiya" path="res://TileSets/ВСЕ ЕБАНЫЕ СПРАЙТЫ.png" id="2_ej1an"]
+[ext_resource type="Texture2D" uid="uid://bgpteuyy1n3k3" path="res://Sprites/Environment_Objects/Prototype_level/Log/Out_bark.png" id="2_forso"]
+[ext_resource type="Texture2D" uid="uid://d1dnjcf0d2mip" path="res://Sprites/Environment_Objects/Prototype_level/Log/Inner_bark.png" id="3_64htr"]
 
 [node name="Log" type="Area2D"]
+z_index = -1
 script = ExtResource("2_3qodr")
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(72, 160, 72, -104, -72, -192, -72, 122.75, -43, 127, -42, 158)
+visible = false
+position = Vector2(0, 16)
+polygon = PackedVector2Array(72, 168, 72, -104, -56, -192, -56, 104, -32, 104, -32, 168)
 
 [node name="TextureFace" type="Sprite2D" parent="."]
-z_index = 1
-position = Vector2(96, -82)
-texture = ExtResource("2_ej1an")
-hframes = 2
-vframes = 2
-frame = 3
+z_index = -1
+z_as_relative = false
+texture = ExtResource("2_forso")
 
 [node name="TextureBack" type="Sprite2D" parent="."]
-z_index = -5
-position = Vector2(-181, -82)
-texture = ExtResource("2_ej1an")
-hframes = 2
-vframes = 2
-frame = 2
+z_index = -2
+z_as_relative = false
+texture = ExtResource("3_64htr")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

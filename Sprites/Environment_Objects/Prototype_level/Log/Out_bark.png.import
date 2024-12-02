@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djmqwno112m8l"
-path="res://.godot/imported/props2.png-dc2d7153a3fb9d65be4c639cf6796dc2.ctex"
+uid="uid://bgpteuyy1n3k3"
+path="res://.godot/imported/Out_bark.png-4dfac456b74937ba8834cc80aa6cd019.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/TileSets/FantasyCaves/props2.png"
-dest_files=["res://.godot/imported/props2.png-dc2d7153a3fb9d65be4c639cf6796dc2.ctex"]
+source_file="res://Sprites/Environment_Objects/Prototype_level/Log/Out_bark.png"
+dest_files=["res://.godot/imported/Out_bark.png-4dfac456b74937ba8834cc80aa6cd019.ctex"]
 
 [params]
 
