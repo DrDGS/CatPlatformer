@@ -45,6 +45,7 @@ extends CharacterBody2D
 @export var TIME_TO_IDLE = 1.05
 @export var TIME_TO_DRY = 3
 @export var TIME_TO_ELEC = 3
+@export var COYOT_TIME = 1
 
 @export var hpComponent : Node2D
 @export var plInput : Node2D
@@ -54,6 +55,8 @@ extends CharacterBody2D
 @onready var idle_timer = $IdleTimer
 @onready var jump_timer = $JumpTimer
 @onready var body_state_timer = $ChangeBodyStateTimer
+@onready var coyot_timer = $CoyotTimer
+@onready var raycast = $RayCast2D 
 
 enum State {Idle, Walk, Run, Jump, Landing, OnWall, OnWallIdle, ChangeBodyState}
 enum BodyState {Wet, Dry, Elec}
@@ -63,6 +66,7 @@ var was_running
 var speed_coef
 var jump_coef
 var animation_ground
+var coyot_can_jump = true
 
 func _ready():
 	player_state = State.Idle
@@ -70,6 +74,7 @@ func _ready():
 	idle_timer.timeout.connect(_on_idle_timer_timeout)
 	jump_timer.timeout.connect(_on_jump_timer_timeout)
 	body_state_timer.timeout.connect(_on_change_body_state_timer_timeout)
+	coyot_timer.timeout.connect(_on_coyot_timer_timeout)
 
 
 func _physics_process(delta):
@@ -192,10 +197,15 @@ func player_run():
 		
 
 func player_jump():
+	if coyot_timer.is_stopped() and is_on_floor():
+		coyot_timer.wait_time = COYOT_TIME
+		coyot_timer.start()
 	if not is_on_wall():
 		plInput.can_climb_wall = true
 	if plInput.in_air:
-		if is_on_floor():
+		if is_on_floor() or coyot_can_jump:
+			coyot_can_jump = false
+			coyot_timer.stop()
 			velocity.y = JUMP_VELOCITY - (abs(velocity.x) * JUMP_HEIGHT_FACTOR_FROM_X)
 		player_state = State.Jump
 
@@ -205,6 +215,7 @@ func player_jump():
 			plInput.in_air = false
 
 	if not plInput.in_air and is_on_floor():
+		coyot_can_jump = true
 		if not plInput.direction:
 			player_state = State.Idle
 		elif plInput.direction and not plInput.is_run:
@@ -244,6 +255,10 @@ func _on_idle_timer_timeout():
 	player_state = State.OnWallIdle
 	was_running = false
 	idle_timer.stop()
+
+func _on_coyot_timer_timeout():
+	coyot_can_jump = false
+	coyot_timer.stop()
 
 func _on_jump_timer_timeout():
 	animation_ground = true
@@ -290,17 +305,15 @@ func player_animation():
 		State.Walk:
 			animation_player.play("CatWalk")
 		State.Run:
-			animation_player.play("CatWalk")
+			animation_player.play("CatRun")
 		State.Jump:
 			if plInput.in_air:
 				if animation_player.current_animation != "CatJumpUpFinish":
-					jump_timer.wait_time = TIME_ASCEND + TIME_DESCEND - ANIMATION_GROUND_TIME
-					jump_timer.start()
-					animation_ground = false
 					animation_player.play("CatJumpUp")
 				animation_player.queue("CatJumpUpFinish")
 			else:
-				if animation_ground:
+				raycast.force_raycast_update()
+				if raycast.is_colliding() and velocity.y > 20:
 					animation_player.play("CatJumpDownFinish")
 				else:
 					animation_player.play("CatJumpDown")
