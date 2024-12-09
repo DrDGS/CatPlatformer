@@ -9,6 +9,5 @@
 texture = ExtResource("1_y05gn")
 
 [node name="Trigger" parent="." instance=ExtResource("2_nlpqd")]
-scale = Vector2(0.5, 1)
-
-[connection signal="body_entered" from="Trigger" to="Trigger" method="_on_body_entered"]
+position = Vector2(4, 0)
+scale = Vector2(0.375, 1)
