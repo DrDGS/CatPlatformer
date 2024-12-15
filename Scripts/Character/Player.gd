@@ -40,12 +40,12 @@ extends CharacterBody2D
 @onready var GRAVITY_ASC = -(2 * JUMP_HEIGHT) / (TIME_ASCEND * TIME_ASCEND)
 @onready var GRAVITY_DSC = -(2 * JUMP_HEIGHT) / (TIME_DESCEND * TIME_DESCEND)
 
-@export var WALL_CLIMBING_VELOCITY = 50
+@export var WALL_CLIMBING_VELOCITY = 25
 @export var WALL_KNOKBACK = 200
 @export var TIME_TO_IDLE = 1.05
 @export var TIME_TO_DRY = 3
 @export var TIME_TO_ELEC = 3
-@export var COYOT_TIME = 10
+@export var COYOT_TIME = 1
 
 @export var hpComponent : Node2D
 @export var plInput : Node2D
@@ -80,6 +80,7 @@ func _ready():
 func _physics_process(delta):
 	apply_gravity(delta)
 	state_machine()
+	#print("Player state: ", State.keys()[player_state])
 	move_and_slide()
 
 
@@ -240,6 +241,7 @@ func player_onWall():
 			velocity.y = min(velocity.y, WALL_CLIMBING_VELOCITY)
 		else:
 			velocity.y = min(velocity.y, 0)
+		print(wall_type)
 	else:
 		player_state = State.Jump
 	if plInput.is_jump:

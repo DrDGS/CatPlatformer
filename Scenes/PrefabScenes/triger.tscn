@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://bleuxvrbpbf75"]
+[gd_scene load_steps=3 format=3 uid="uid://cp2euhca5i0v0"]
 
 [ext_resource type="Script" path="res://Scenes/PrefabScenes/triger.gd" id="1_usk5s"]
 
@@ -9,6 +9,5 @@ size = Vector2(64, 64)
 script = ExtResource("1_usk5s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_g8ya5")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
