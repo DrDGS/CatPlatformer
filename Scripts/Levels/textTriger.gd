@@ -7,6 +7,7 @@ extends Area2D
 @export var time_out = 5
 @export var show_time = 5
 @export var after_death = false
+
 @onready var timer = $Timer
 var show = false
 

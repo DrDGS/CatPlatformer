@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://Scripts/FollowCamera.gd" id="1_4k3b6"]
 [ext_resource type="PackedScene" uid="uid://bbex6nahnu52s" path="res://Scenes/PrefabScenes/character_body_2d.tscn" id="1_j1s5y"]
+[ext_resource type="FontFile" uid="uid://bkvmai3fh442d" path="res://Localization/Fonts/Chava/Chava-Regular.ttf" id="2_dt0vv"]
 [ext_resource type="Texture2D" uid="uid://bo4358ur6fhf0" path="res://Sprites/Backgrounds/Forest/Layer1.png" id="2_rdtte"]
-[ext_resource type="FontFile" uid="uid://i7ydqpvfxtl7" path="res://Localization/Fonts/Home Video/HomeVideo-Regular.otf" id="3_6qgyv"]
 [ext_resource type="Texture2D" uid="uid://bdf0j2o70mf40" path="res://Sprites/Backgrounds/Forest/Layer2.png" id="3_lij6s"]
 [ext_resource type="Texture2D" uid="uid://dp37exagnrdlc" path="res://Sprites/Backgrounds/Forest/Layer3.png" id="4_i5em2"]
 [ext_resource type="Texture2D" uid="uid://dvebu8nbsics4" path="res://Sprites/Backgrounds/Forest/Layer4.png" id="5_s0y34"]
@@ -25,7 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://cq44l4mun18p" path="res://Scenes/PrefabScenes/TextTriger.tscn" id="22_pp16u"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_qitmn"]
-font = ExtResource("3_6qgyv")
+font = ExtResource("2_dt0vv")
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
@@ -14994,8 +14994,9 @@ offset_left = -318.0
 offset_top = 83.0
 offset_right = 319.0
 offset_bottom = 181.0
-text = "Ну ты и лосукил"
 label_settings = SubResource("LabelSettings_qitmn")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="TestingSceneBackground" type="CanvasLayer" parent="."]
 
