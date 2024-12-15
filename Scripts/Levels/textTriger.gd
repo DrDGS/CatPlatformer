@@ -6,6 +6,7 @@ extends Area2D
 @export var can_show = true
 @export var time_out = 5
 @export var show_time = 5
+@export var after_death = false
 @onready var timer = $Timer
 var show = false
 
@@ -44,7 +45,7 @@ func _on_body_exited(body):
 			bottomUI.text = ""
 			can_show = false
 			show = false
-			if timer.is_stopped():
+			if timer.is_stopped() and not after_death:
 				timer.wait_time = time_out
 				timer.start()
 		else:

@@ -15165,10 +15165,11 @@ position = Vector2(1836, -132)
 scale = Vector2(1, 3.2)
 
 [node name="TextTriger" parent="." node_paths=PackedStringArray("bottomUI") instance=ExtResource("22_pp16u")]
-position = Vector2(1231, -656)
+position = Vector2(1232, -655)
 scale = Vector2(6.41863, 3.03923)
 text = "Ну ты и лоускил"
 bottomUI = NodePath("../FollowCamera/Label")
+after_death = true
 
 [connection signal="body_entered" from="DT/DeathTriger" to="DT/DeathTriger" method="_on_body_entered"]
 [connection signal="body_entered" from="DT/DeathTriger3" to="DT/DeathTriger3" method="_on_body_entered"]
