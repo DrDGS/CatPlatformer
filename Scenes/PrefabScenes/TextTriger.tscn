@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cq44l4mun18p"]
+
+[ext_resource type="Script" path="res://Scripts/Levels/textTriger.gd" id="1_up4yd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g8ya5"]
+size = Vector2(64, 64)
+
+[node name="TextTriger" type="Area2D"]
+script = ExtResource("1_up4yd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_g8ya5")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
