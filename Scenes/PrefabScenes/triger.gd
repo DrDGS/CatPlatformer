@@ -13,7 +13,7 @@ func _process(delta):
 
 func _on_body_entered(body):
 	if body.name == "CharacterBody2D":
-		if self.name == "Trigger" or self.name.begins_with("Trigger"):
+		if self.name == "DeathTriger" or self.name.begins_with("DeathTriger"):
 			DeathTriger(body)
 		if self.name == "PoolTriger":
 			PoolTriger(body)
