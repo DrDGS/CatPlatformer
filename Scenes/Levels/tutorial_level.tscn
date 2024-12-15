@@ -14973,7 +14973,7 @@ sources/3 = SubResource("TileSetAtlasSource_icrtc")
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_j1s5y")]
 z_index = 1
 z_as_relative = false
-position = Vector2(1696, -64)
+position = Vector2(1264, -640)
 
 [node name="FollowCamera" type="Camera2D" parent="." node_paths=PackedStringArray("targetObject")]
 script = ExtResource("1_4k3b6")
