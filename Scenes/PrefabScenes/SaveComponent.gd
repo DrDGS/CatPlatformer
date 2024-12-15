@@ -20,4 +20,8 @@ func loadPoint():
 	get_parent().set_position(coordinate)
 	get_parent().player_body_state = state
 	get_parent().hpComponent.setMaxHp()
+	var all_childs = get_parent().get_parent().get_children()
+	for child in all_childs:
+		if child.name.begins_with("TextTriger") and child.after_death:
+			child.can_show = true
 	

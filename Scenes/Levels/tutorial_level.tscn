@@ -1,7 +1,9 @@
 [gd_scene load_steps=27 format=3 uid="uid://sprrndvaixj7"]
 
+
 [ext_resource type="Script" path="res://Scripts/FollowCamera.gd" id="1_4k3b6"]
 [ext_resource type="PackedScene" uid="uid://bbex6nahnu52s" path="res://Scenes/PrefabScenes/character_body_2d.tscn" id="1_j1s5y"]
+[ext_resource type="FontFile" uid="uid://bkvmai3fh442d" path="res://Localization/Fonts/Chava/Chava-Regular.ttf" id="2_dt0vv"]
 [ext_resource type="Texture2D" uid="uid://bo4358ur6fhf0" path="res://Sprites/Backgrounds/Forest/Layer1.png" id="2_rdtte"]
 [ext_resource type="Texture2D" uid="uid://bdf0j2o70mf40" path="res://Sprites/Backgrounds/Forest/Layer2.png" id="3_lij6s"]
 [ext_resource type="Texture2D" uid="uid://dp37exagnrdlc" path="res://Sprites/Backgrounds/Forest/Layer3.png" id="4_i5em2"]
@@ -18,6 +20,12 @@
 [ext_resource type="Texture2D" uid="uid://clv7do8sn7rpe" path="res://TileSets/FantasyCaves/mainlev_build.png" id="15_qmxb4"]
 [ext_resource type="Texture2D" uid="uid://ccmmfc4uf10at" path="res://TileSets/FantasyCaves/props1.png" id="16_xr7d8"]
 [ext_resource type="Texture2D" uid="uid://djmqwno112m8l" path="res://TileSets/FantasyCaves/props2.png" id="17_erxki"]
+[ext_resource type="PackedScene" uid="uid://cmg0oyhd27qot" path="res://Scenes/PrefabScenes/transfer_log_tutor_level.tscn" id="18_k81cg"]
+[ext_resource type="PackedScene" uid="uid://cq44l4mun18p" path="res://Scenes/PrefabScenes/TextTriger.tscn" id="22_pp16u"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_tcw3m"]
+font = ExtResource("2_dt0vv")
+font_size = 28
 [ext_resource type="PackedScene" uid="uid://ci0ysgre100ru" path="res://Scenes/PrefabScenes/transfer_log_tutor_level.tscn" id="18_k81cg"]
 [ext_resource type="PackedScene" uid="uid://cyaf4tmtn3f4t" path="res://Scenes/PrefabScenes/finish.tscn" id="21_2bghi"]
 [ext_resource type="PackedScene" uid="uid://b3nh5qikxs6r8" path="res://Scenes/PrefabScenes/spike.tscn" id="21_dfmp0"]
@@ -14976,9 +14984,18 @@ z_as_relative = false
 position = Vector2(1264, -640)
 
 [node name="FollowCamera" type="Camera2D" parent="." node_paths=PackedStringArray("targetObject")]
+position = Vector2(0, -416)
 script = ExtResource("1_4k3b6")
 targetObject = NodePath("../CharacterBody2D")
 smoothing_enabled = true
+
+[node name="Label" type="Label" parent="FollowCamera"]
+z_index = 100
+offset_left = -320.0
+offset_top = 77.0
+offset_right = 320.0
+offset_bottom = 179.0
+label_settings = SubResource("LabelSettings_tcw3m")
 
 [node name="TestingSceneBackground" type="CanvasLayer" parent="."]
 
